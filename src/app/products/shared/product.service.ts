@@ -54,7 +54,7 @@ export class ProductService {
   }
 
   public getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`http://192.168.0.245${this.productsUrl.baseProductsUrl}/pageStore/0/10`, {observe: 'response'})
+    return this.http.get<Product[]>(`http://192.168.0.245${this.productsUrl.baseProductsUrl}/pageStore/0/100`, {observe: 'response'})
       .pipe(map((arr) => arr.body as Product[]), catchError(this.handleError<any>(`getProducts`)));
   }
 
