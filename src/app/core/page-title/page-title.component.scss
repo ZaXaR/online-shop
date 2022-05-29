@@ -4,8 +4,8 @@
 // Page Title
 .page-title {
   width: 100%;
-  margin-bottom: ceil($grid-vertical-step * 2.5); //~60px
-  padding: floor($grid-vertical-step * 1.5) 0; //~36px 0
+  margin-bottom: ceil($grid-vertical-step * 1.1); //~60px
+  padding: floor($grid-vertical-step * 0.5) 0; //~36px 0
   border-bottom: 1px solid $border-color;
   background-color: $gray-lighter;
   > .container,
@@ -51,7 +51,7 @@
     }
     > a {
       transition: color .25s;
-      color: $nav-link-color;
+      color: $gray-dark;
       text-decoration: none;
       &:hover { color: $nav-link-hover-color; }
     }

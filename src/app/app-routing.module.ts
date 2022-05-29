@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'products', component: ProductsListComponent },
-  { path: 'products/:id', component: ProductDetailComponent },
+  { path: 'products/item/:id', component: ProductDetailComponent },
+  { path: 'products/:categories', component: ProductsListComponent },
   { path: 'cart', component: CartComponent },
   { path: 'admin/add', component: AddEditComponent, canActivate: [AdminGuard] },
   {

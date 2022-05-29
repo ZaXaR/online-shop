@@ -16,7 +16,6 @@ import { User } from '../../models/user.model';
 export class HeaderComponent implements OnInit, OnDestroy {
   private authSubscription: Subscription;
   public user: User;
-  public showSearch;
 
   constructor(
     private authService: AuthService,

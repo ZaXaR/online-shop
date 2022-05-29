@@ -36,12 +36,12 @@
 <!--    <app-rating-stars [rating]="product.currentRating"></app-rating-stars>-->
 <!--  </div>-->
 
-  <a class="product-thumb" [ngClass]="{'loading': imageLoading}" routerLink="/products/{{product._id}}">
+  <a class="product-thumb" [ngClass]="{'loading': imageLoading}" routerLink="/products/item/{{product._id}}">
     <img [hidden]="imageLoading" (load)="onImageLoad()" src="http://77.120.228.32/uploads/{{product.imageURLs[0]}}" alt="{{product.nameOfProduct}}"/>
   </a>
   <div class="product-info">
     <h3 class="product-title">
-      <a routerLink="/products/{{product._id}}">{{product.nameOfProduct}} ({{product.barcode}})</a>
+      <a routerLink="/products/item/{{product._id}}">{{product.nameOfProduct}} ({{product.barcode}})</a>
     </h3>
     <h4 class="product-price"><app-price [product]="product"></app-price></h4>
     <p *ngIf="displayMode === 'list'" class="hidden-xs-down">{{product.description}}</p>

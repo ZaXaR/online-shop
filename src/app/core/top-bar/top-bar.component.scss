@@ -17,7 +17,7 @@
     &:last-child { text-align: right; }
     &:first-child { text-align: left; }
     a:not(.social-button), span, p {
-      color: $nav-link-color;
+      color: $gray;
       font-size: $font-size-xs;
 		}
     > a:not(.social-button), > span, > p {

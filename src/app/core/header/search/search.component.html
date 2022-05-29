@@ -1,5 +1,9 @@
-<div class="site-search" [ngClass]="{'search-visible' : showSearch}">
-  <input type="text" (input)="onSearchInput($event)" placeholder="Type to search...">
+<div class="site-search">
+  <div class="form-outline">
+    <input type="search" (input)="onSearchInput($event)" class="form-control"
+           placeholder="Я шукаю..." aria-label="Search" />
+  </div>
+<!--  <input type="text" (input)="onSearchInput($event)"  placeholder="Type to search...">-->
   <div class="search-tools">
     <span class="close-search">
       <i class="icon-cross" (click)="onCloseSearch()"></i>

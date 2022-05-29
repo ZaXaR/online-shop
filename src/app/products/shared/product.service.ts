@@ -53,26 +53,33 @@ export class ProductService {
     };
   }
 
-  public getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`http://192.168.0.245${this.productsUrl.baseProductsUrl}/pageStore/0/100`, {observe: 'response'})
+  public getProducts(type?: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.productsUrl.baseProductsUrl}/pageStore/0/100/${type}`, {observe: 'response'})
       .pipe(map((arr) => arr.body as Product[]), catchError(this.handleError<any>(`getProducts`)));
   }
 
   public getProductsQuery(): Observable<Product[]> {
-    return this.http.get<Product[]>(`http://192.168.0.245${this.productsUrl.baseProductsUrl}/top-sellers`, {observe: 'response'})
+    return this.http.get<Product[]>(`${this.productsUrl.baseProductsUrl}/top-sellers`, {observe: 'response'})
       .pipe(map((arr) => arr.body as Product[]), catchError(this.handleError<any>(`getTopProducts`)));
   }
 
   public findProducts(term): Observable<any> {
-    return this.angularFireDatabase
-      .list<Product>('products', (ref) =>
-        ref
-          .orderByChild('name')
-          .startAt(term)
-          .endAt(term + '\uf8ff')
-      )
-      .valueChanges()
-      .pipe(catchError(this.handleError<Product[]>(`getProductsQuery`)));
+    console.log(term);
+    return this.http.get<Product[]>(`${this.productsUrl.baseProductsUrl}/search/${term}`, {observe: 'response'})
+      .pipe(
+        map((res) => {
+          return res.body as Product[];
+        })
+      );
+    // return this.angularFireDatabase
+    //   .list<Product>('products', (ref) =>
+    //     ref
+    //       .orderByChild('name')
+    //       .startAt(term)
+    //       .endAt(term + '\uf8ff')
+    //   )
+    //   .valueChanges()
+    //   .pipe(catchError(this.handleError<Product[]>(`getProductsQuery`)));
   }
 
   // public getProductsByDate(limitToLast: number): Observable<Product[]> {
@@ -88,7 +95,7 @@ export class ProductService {
   // }
 
   public getProductsByDate(limitToLast: number): Observable<Product[]> {
-    return this.http.get<Product[]>(`http://192.168.0.245${this.productsUrl.baseProductsUrl}/new/5`, {observe: 'response'})
+    return this.http.get<Product[]>(`${this.productsUrl.baseProductsUrl}/new/5`, {observe: 'response'})
       .pipe(map((arr) => arr.body as Product[]),
         catchError(this.handleError<any>(`getProductsNew`)));
   }
@@ -126,10 +133,14 @@ export class ProductService {
   //       catchError(this.handleError<Product[]>(`getFeaturedProducts`)));
   // }
 
+
+  public getCategories(): Observable<any[]> {
+    return this.http.get<any[]>(this.productsUrl.baseCategoriesUrl)
+      .pipe(map((arr) => arr), catchError(this.handleError<any>(`getCategories`)));
+  }
+
   public getProduct(id: any): Observable<Product | null> {
-    console.log(id);
-    // const url = `${this.productsUrl.productsUrl}/${id}`;
-    const url = `http://192.168.0.245${this.productsUrl.baseProductsUrl}/${id}`;
+    const url = `${this.productsUrl.baseProductsUrl}/${id}`;
     return this.http.get<Product>(url)
       .pipe(
         tap((result) => {

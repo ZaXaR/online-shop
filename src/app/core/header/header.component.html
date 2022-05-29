@@ -2,8 +2,6 @@
 <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page.-->
 <header class="navbar navbar-sticky">
 
-  <app-search (onHideSearch)="showSearch = false" [showSearch]="showSearch" class="site-search-wrapper"></app-search>
-
   <div class="site-branding">
     <div class="inner">
       <!-- Off-Canvas Toggle (#shop-categories)-->
@@ -15,17 +13,23 @@
     </div>
   </div>
 
+  <div class="logo-wrap">
+    <a class="logo" href="/"><div><h2>Mi</h2><h2>nE</h2></div>ua</a>
+  </div>
+
   <app-navigation-main></app-navigation-main>
 
   <!-- Toolbar-->
   <div class="toolbar">
     <div class="inner">
       <div class="tools">
-        <div class="search">
-          <i (click)="showSearch = true" class="fa-solid fa-magnifying-glass"></i>
-        </div>
+
+        <app-search class="site-search-wrapper"></app-search>
+
         <div class="account">
-          <a *ngIf="!user; else whenLoggedIn" routerLink="/register-login"></a>
+          <a *ngIf="!user; else whenLoggedIn" routerLink="/register-login">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          </a>
 
           <ng-template #whenLoggedIn>
             <a routerLink="/account/profile"></a>
@@ -54,7 +58,7 @@
           </ul>
         </div>
 
-        <app-toolbar-cart></app-toolbar-cart>
+<!--        <app-toolbar-cart></app-toolbar-cart>-->
 
       </div>
     </div>
