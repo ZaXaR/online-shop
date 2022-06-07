@@ -37,7 +37,7 @@
 <!--  </div>-->
 
   <a class="product-thumb" [ngClass]="{'loading': imageLoading}" routerLink="/products/item/{{product._id}}">
-    <img [hidden]="imageLoading" (load)="onImageLoad()" src="http://mine.in.ua/uploads/{{product.imageURLs[0]}}" alt="{{product.nameOfProduct}}"/>
+    <img [hidden]="imageLoading" (load)="onImageLoad()" src="https://tab.mine.in.ua/uploads/{{product.imageURLs[0]}}" alt="{{product.nameOfProduct}}"/>
   </a>
   <div class="product-info">
     <h3 class="product-title">
@@ -49,7 +49,7 @@
       <!-- <button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist">
         <i class="icon-heart"></i>
       </button> -->
-      <button class="btn btn-outline-primary btn-sm" (click)="onAddToCart()">Додати до корзини</button>
+      <button class="btn btn-outline-primary btn-sm" (click)="onAddToCart()">Додати до кошика</button>
 
       <button *ngIf="user && user.roles.admin" class="btn btn-primary btn-sm" routerLink="/admin/edit/{{product._id}}">
         Редагувати
@@ -57,3 +57,4 @@
     </div>
   </div>
 </div>
+`

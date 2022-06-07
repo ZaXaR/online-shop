@@ -15,7 +15,7 @@
             <div class="product-gallery-image" [ngClass]="{'loading': !imagesLoaded.includes(activeImageUrl)}">
 <!--              <img [hidden]="!imagesLoaded.includes(activeImageUrl)" class="img-fluid"-->
               <img class="img-fluid"
-                   src="http://mine.in.ua/uploads/{{activeImageUrl}}" alt="{{product.nameOfProduct}}"
+                   src="https://tab.mine.in.ua/uploads/{{activeImageUrl}}" alt="{{product.nameOfProduct}}"
                    (load)="onImageLoad($event)">
             </div>
             <ul class="product-thumbnails">
@@ -23,7 +23,7 @@
                 <a href="" (click)="onSelectThumbnail($event, i)" class="product-thumbnail-image"
                    [ngClass]="{'loading': !imagesLoaded.includes(activeImageUrl)}">
 <!--                  <img [hidden]="!imagesLoaded.includes(image)" [src]="'http://mine.in.ua/uploads/'+image"-->
-                  <img [src]="'http://mine.in.ua/uploads/'+image"
+                  <img [src]="'https://tab.mine.in.ua/uploads/'+image"
                        alt="{{product.nameOfProduct}}" (load)="onImageLoad($event)">
                 </a>
               </li>
@@ -80,7 +80,7 @@
             </div>
           </div>
           <div class="pt-1 mb-2">
-            <span class="text-medium">SKU:</span> {{ product.id }}
+            <span class="text-medium">SKU:</span> {{ product._id }}
           </div>
 <!--          <div class="padding-bottom-1x mb-2">-->
 <!--            <span *ngIf="product.categories" class="text-medium">Categories:&nbsp;</span>-->
@@ -121,7 +121,7 @@
                 <i class="icon-heart"></i>
               </button> -->
               <button class="btn btn-primary" (click)="onAddToCart()">
-                <i class="icon-bag"></i> Додати до корзини
+                <i class="icon-bag"></i> Додати до кошика
               </button>
             </div>
           </div>
