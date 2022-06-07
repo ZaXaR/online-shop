@@ -103,7 +103,7 @@ describe('AddEditComponent', () => {
     const result = addEditComponent['syncProduct'](testDomainProduct);
     expect(addEditComponent.product.description).toEqual('My new description');
     expect(addEditComponent.product.name).toEqual('My name');
-    expect(addEditComponent.product.id).toBeGreaterThan(1);
+    expect(addEditComponent.product._id).toBeGreaterThan(1);
     expect(addEditComponent.product.reduction).toBe(50);
     expect(addEditComponent.product.sale).toBe(true);
     expect(addEditComponent.product.imageURLs).toEqual(['/my-image']);
@@ -111,7 +111,7 @@ describe('AddEditComponent', () => {
 
   it('should have a working method constructMockProduct', () => {
     const result = addEditComponent['constructMockProduct']();
-    expect(result.id).toBe(1);
+    expect(result._id).toBe(1);
   });
 
   describe('has a method constructProductToSubmit, it', () => {

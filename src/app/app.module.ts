@@ -22,6 +22,7 @@ import {CartComponent} from './cart/cart.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import localeUk from '@angular/common/locales/uk';
 import {registerLocaleData} from '@angular/common';
+import {StorageService} from './services/storage/storage.service';
 
 registerLocaleData(localeUk);
 
@@ -48,6 +49,7 @@ registerLocaleData(localeUk);
     ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [
+    StorageService,
     {provide: LOCALE_ID, useValue: 'uk_UA'},
   ],
   bootstrap: [AppComponent]

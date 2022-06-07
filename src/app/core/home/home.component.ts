@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(
         (products) => {
           this.productsNewArrivals = products;
-          console.log(products);
         },
         (err) => console.error(err)
       );

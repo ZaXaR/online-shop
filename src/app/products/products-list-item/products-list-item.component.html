@@ -37,7 +37,7 @@
 <!--  </div>-->
 
   <a class="product-thumb" [ngClass]="{'loading': imageLoading}" routerLink="/products/item/{{product._id}}">
-    <img [hidden]="imageLoading" (load)="onImageLoad()" src="http://77.120.228.32/uploads/{{product.imageURLs[0]}}" alt="{{product.nameOfProduct}}"/>
+    <img [hidden]="imageLoading" (load)="onImageLoad()" src="http://mine.in.ua/uploads/{{product.imageURLs[0]}}" alt="{{product.nameOfProduct}}"/>
   </a>
   <div class="product-info">
     <h3 class="product-title">

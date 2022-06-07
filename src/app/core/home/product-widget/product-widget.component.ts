@@ -15,6 +15,5 @@ export class ProductWidgetComponent {
 
   constructor(private router: Router) {
     this.href = this.router.url;
-    console.log(this.router);
   }
 }

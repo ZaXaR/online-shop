@@ -6,6 +6,7 @@ import {AuthService} from '../../../account/shared/auth.service';
 
 import {User} from '../../../models/user.model';
 import {ProductService} from '../../../products/shared/product.service';
+import {StorageService} from '../../../services/storage/storage.service';
 
 @Component({
   selector: 'app-navigation-main',
@@ -18,7 +19,8 @@ export class NavigationMainComponent implements OnInit, OnDestroy {
   public categories: any;
 
   constructor(public authService: AuthService,
-              private productService: ProductService) {
+              private productService: ProductService,
+              private storageService: StorageService) {
   }
 
   ngOnInit() {
@@ -29,10 +31,9 @@ export class NavigationMainComponent implements OnInit, OnDestroy {
   }
 
   getCategories() {
-    console.log('getCategories');
-      this.productService.getCategories().subscribe(data => {
-        this.categories = data;
-      });
+    this.storageService.categoriesStorage$.subscribe(categories => {
+      this.categories = categories;
+    });
   }
 
   ngOnDestroy() {

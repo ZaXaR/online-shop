@@ -171,7 +171,7 @@ export class ProductService {
   //   );
 
   public updateProduct(data: { product: Product; files: FileList }) {
-    const url = `${this.productsUrl.productsUrl}/${data.product.id}`;
+    const url = `${this.productsUrl.productsUrl}/${data.product._id}`;
 
     if (!data.files.length) {
       return this.updateProductWithoutNewImage(data.product, url);
@@ -225,7 +225,7 @@ export class ProductService {
 
         return this.angularFireDatabase
           .list('products')
-          .set(data.product.id.toString(), data.product);
+          .set(data.product._id.toString(), data.product);
       }, (error) => error)
       .then((response) => {
         this.log(`Added Product ${data.product.name}`);
@@ -242,7 +242,7 @@ export class ProductService {
   }
 
   public deleteProduct(product: Product) {
-    const url = `${this.productsUrl.productsUrl}/${product.id}`;
+    const url = `${this.productsUrl.productsUrl}/${product._id}`;
 
     this.uploadService.deleteFile(product.imageRefs);
 

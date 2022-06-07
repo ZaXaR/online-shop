@@ -1,20 +1,21 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Params } from '@angular/router';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Location} from '@angular/common';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Params} from '@angular/router';
 
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {combineLatest, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
-import { AuthService } from '../../account/shared/auth.service';
-import { CartService } from '../../cart/shared/cart.service';
-import { CartItem } from '../../models/cart-item.model';
-import { ProductsCacheService } from '../shared/products-cache.service';
-import { ProductRatingService } from '../shared/product-rating.service';
-import { ProductService } from '../shared/product.service';
+import {AuthService} from '../../account/shared/auth.service';
+import {CartService} from '../../cart/shared/cart.service';
+import {CartItem} from '../../models/cart-item.model';
+import {ProductsCacheService} from '../shared/products-cache.service';
+import {ProductRatingService} from '../shared/product-rating.service';
+import {ProductService} from '../shared/product.service';
 
-import { Product } from '../../models/product.model';
-import { User } from '../../models/user.model';
+import {Product} from '../../models/product.model';
+import {User} from '../../models/user.model';
+import {StorageService} from '../../services/storage/storage.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -37,6 +38,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   public ratingCount: number;
   public ratingValues: number[];
   public selectedRating: any;
+  public title: {
+    _id: string,
+    name: string,
+    abbreviation: string
+    abbreviation_ua: string
+  };
 
   constructor(
     private router: Router,
@@ -46,8 +53,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private productsCacheService: ProductsCacheService,
     private productService: ProductService,
-    private productRatingService: ProductRatingService
-  ) {}
+    private productRatingService: ProductRatingService,
+    private storageService: StorageService
+  ) {
+  }
 
   ngOnInit(): void {
     this.authService.user
@@ -71,13 +80,16 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.productLoading = true;
 
     const id = this.route.snapshot.params['id'];
-    console.log(id);
-    this.productService
-      .getProduct(id)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((product: Product) => {
+    combineLatest([
+      this.productService
+        .getProduct(id),
+      this.storageService.categoriesStorage$
+    ]).pipe(takeUntil(this.unsubscribe$))
+      .subscribe(([product, category]) => {
         if (product) {
-          this.product = product;
+          this.product = <Product>product;
+          const data = category.filter(({name}) => name === this.product.options.categories.name);
+          this.title = data[0];
           this.setupProduct();
           this.productLoading = false;
         } else {

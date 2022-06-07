@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class PageTitleComponent {
   @Input() public title: string;
-  @Input() public children: {title: string, link: string}[];
+  @Input() public children: {title: string, link?: string}[];
 }

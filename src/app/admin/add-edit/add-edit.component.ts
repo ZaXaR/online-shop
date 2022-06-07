@@ -54,7 +54,7 @@ export class AddEditComponent implements OnInit, OnDestroy {
       ),
       id: new FormControl(
         {
-          value: this.product && this.product.id,
+          value: this.product && this.product._id,
           disabled: true
         },
         [Validators.required, Validators.min(0)]
@@ -165,7 +165,7 @@ export class AddEditComponent implements OnInit, OnDestroy {
   private addProduct(product: Product, files: FileList) {
     this.productService.addProduct({ product, files }).subscribe(
       (savedProduct: Product) => {
-        if (savedProduct.id) {
+        if (savedProduct._id) {
           this.product = null;
           this.router.navigate(['/products']);
         }
@@ -181,7 +181,7 @@ export class AddEditComponent implements OnInit, OnDestroy {
     this.productSubscription.unsubscribe();
     this.productService.updateProduct({ product, files }).subscribe(
       (response: Product) => {
-        this.router.navigate(['/products/' + response.id]);
+        this.router.navigate(['/products/' + response._id]);
       },
       (error) => this.log.addError('Could not update your product')
     );
@@ -212,7 +212,7 @@ export class AddEditComponent implements OnInit, OnDestroy {
 
   private createId(product: Product): number {
     const randomId = Math.floor(Math.random() * new Date().getTime());
-    let id = product.id || randomId;
+    let id = product._id || randomId;
     if (id === 1) {
       id = randomId;
     }

@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {Subject} from 'rxjs';
+import {combineLatest, Subject} from 'rxjs';
 import {filter, map, takeUntil} from 'rxjs/operators';
 
 import {AuthService} from '../../account/shared/auth.service';
@@ -9,10 +9,10 @@ import {ProductsCacheService} from '../shared/products-cache.service';
 import {ProductService} from '../shared/product.service';
 import {UiService} from '../shared/ui.service';
 import {SortPipe} from '../shared/sort.pipe';
-
 import {Product} from '../../models/product.model';
 import {User} from '../../models/user.model';
-import {ActivatedRoute, NavigationEnd, NavigationStart, Route, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {StorageService} from '../../services/storage/storage.service';
 
 @Component({
   selector: 'app-products',
@@ -27,6 +27,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   user: User;
   productsLoading: boolean;
   currentPagingPage: number;
+  title: string;
 
   constructor(
     private productService: ProductService,
@@ -35,6 +36,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     private sortPipe: SortPipe,
     private authService: AuthService,
     public uiService: UiService,
+    private storageService: StorageService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -45,6 +47,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         map((event: NavigationEnd) => event.url))
       .subscribe(() => {
         this.getProducts();
+        this.currentPagingPage = 1;
       });
   }
 
@@ -65,16 +68,17 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   getProducts() {
     this.productsLoading = true;
     const categories = this.route.snapshot.paramMap.get('categories');
-    this.productService
-      .getProducts(categories)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((products) => {
-        this.products = <Product[]>products;
-        this.setPage(this.currentPagingPage);
-
-        // console.log(products);
-        this.productsLoading = false;
-      });
+    combineLatest([
+      this.productService
+        .getProducts(categories),
+      this.storageService.categoriesStorage$
+    ]).subscribe(([products, category]) => {
+      this.products = <Product[]>products;
+      const data = category.filter(({name}) => name === categories);
+      this.title = data[0].abbreviation_ua;
+      this.setPage(this.currentPagingPage);
+      this.productsLoading = false;
+    });
   }
 
   onDisplayModeChange(mode: string, e: Event) {
@@ -105,7 +109,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.unsubscribe$.unsubscribe();
+    // this.unsubscribe$.next(true);
     this.unsubscribe$.complete();
   }
 }
