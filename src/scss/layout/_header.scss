@@ -275,6 +275,7 @@
 
 header {
   background-color: #333;
+
   a {
     color: white;
   }
@@ -311,6 +312,7 @@ header {
     justify-content: space-between;
     width: 75px;
     font-size: 22px;
+
     h2 {
       margin: -13px 0;
       font-size: 32px;
@@ -332,6 +334,16 @@ header {
     display: none;
   }
 }
+@media screen and (max-width: 1280px) {
+  header.navbar.navbar-sticky {
+    display: flex;
+    justify-content: end;
+  }
+  .logo-wrap {
+    padding-left: 0px;
+    padding-right: 20px;
+  }
+}
 
 // Site Logo + Off-Canvas Toggle
 .site-branding {
@@ -342,10 +354,21 @@ header {
   z-index: 5;
 
   .inner {
-    display: table;
+    display: flex;
+    align-items: center;
     height: 100%;
     min-height: 100%;
+    padding: 0 20px;
+
+    a {
+      font-size: 26px;
+
+      .fa-regular, .far {
+        font-weight: 600 !important;
+      }
+    }
   }
+
 }
 
 .site-logo,
@@ -745,7 +768,7 @@ header {
 
   .site-menu > ul > li {
     > a {
-      color: $white-color!important;
+      color: $white-color !important;
     }
 
     &:hover > a {
