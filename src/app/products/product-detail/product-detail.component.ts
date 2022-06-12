@@ -83,11 +83,15 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     combineLatest([
       this.productService
         .getProduct(id),
-      this.storageService.categoriesStorage$
+      this.storageService.categoriesStorage$,
+      this.productService.getFullDesc(id)
     ]).pipe(takeUntil(this.unsubscribe$))
-      .subscribe(([product, category]) => {
+      .subscribe(([product, category, description]) => {
         if (product) {
           this.product = <Product>product;
+          if (description) {
+            this.product.fullDesc = description.fullDesc;
+          }
           const data = category.filter(({name}) => name === this.product.options.categories.name);
           this.title = data[0];
           this.setupProduct();

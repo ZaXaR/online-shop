@@ -19,6 +19,7 @@ export class Product {
     public barcode: number = 0,
     public nameOfProduct: string = '',
     public lastUpdateDate: string = new Date().toISOString().split('T')[0],
+    public fullDesc: string = '',
     public options?: {
       stick: boolean,
       categories: {

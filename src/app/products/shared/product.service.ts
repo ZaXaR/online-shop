@@ -13,11 +13,7 @@ import {catchError, Observable, of} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 import {fromPromise} from 'rxjs-compat/observable/fromPromise';
 
-import {HttpClient, HttpResponse, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class ProductService {
@@ -137,6 +133,22 @@ export class ProductService {
   public getCategories(): Observable<any[]> {
     return this.http.get<any[]>(this.productsUrl.baseCategoriesUrl)
       .pipe(map((arr) => arr), catchError(this.handleError<any>(`getCategories`)));
+  }
+
+  public getFullDesc(id: any): Observable<any> {
+    const url = `${this.productsUrl.baseProductsUrl}/get-desc/${id}`;
+    return this.http.get<Product>(url)
+      .pipe(
+        tap((result) => {
+          if (result) {
+            return of(result);
+          } else {
+            this.messageService.addError(`Found no Desc with id=${id}`);
+            return of(null);
+          }
+        }),
+        catchError(this.handleError<Product>(`getProduct id=${id}`))
+      );
   }
 
   public getProduct(id: any): Observable<Product | null> {
