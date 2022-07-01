@@ -11,7 +11,7 @@ Note: The pixelated product images are there because of image licensing reasons.
 ### Clone repository
 
 ```bash
-git clone git@github.com:monobasic/Angular-6-Demo-Shop.git
+git clone git@github.com:ZaXaR/online-shop.git
 ```
 
 ### Install Angular-Cli globally
@@ -23,7 +23,7 @@ npm install -g @angular/cli
 ### Install NPM packages
 
 ```bash
-cd Angular-6-Demo-Shop
+cd online-shop
 npm install
 ```
 
