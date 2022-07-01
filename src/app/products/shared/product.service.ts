@@ -50,7 +50,7 @@ export class ProductService {
   }
 
   public getProducts(type?: string): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.productsUrl.baseProductsUrl}/pageStore/0/100/${type}`, {observe: 'response'})
+    return this.http.get<Product[]>(`${this.productsUrl.baseProductsUrl}/pageStore/${type}`, {observe: 'response'})
       .pipe(map((arr) => arr.body as Product[]), catchError(this.handleError<any>(`getProducts`)));
   }
 

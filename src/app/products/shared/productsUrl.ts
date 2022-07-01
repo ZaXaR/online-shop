@@ -1,7 +1,9 @@
+import {environment} from '../../../environments/environment';
+
 export class ProductsUrl {
-  static localhost = 'https://tab.mine.in.ua';
+  static localhost = environment.apiUrl;
   static productsUrl = '/products';
-  static baseProductsUrl = this.localhost + '/api/products';
-  static baseCategoriesUrl = this.localhost + '/api/categories';
-  static basePromosUrl = this.localhost + '/api/promos';
+  static baseProductsUrl = this.localhost + '/products';
+  static baseCategoriesUrl = this.localhost + '/categories';
+  static basePromosUrl = this.localhost + '/promos';
 }
