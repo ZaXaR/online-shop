@@ -49,9 +49,19 @@ export class ProductService {
     };
   }
 
-  public getProducts(type?: string): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.productsUrl.baseProductsUrl}/pageStore/${type}`, {observe: 'response'})
+  public getProducts(type?: string, params?: any): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.productsUrl.baseProductsUrl}/pageStore/${type}${params}`, {observe: 'response'})
       .pipe(map((arr) => arr.body as Product[]), catchError(this.handleError<any>(`getProducts`)));
+  }
+
+  getFilters(): Observable<any> {
+    return this.http.get<any>(this.productsUrl.baseFiltersUrl)
+      .pipe(
+        map(filters => {
+          return filters;
+        }),
+        catchError(this.handleError<any>(`getFilters`))
+      );
   }
 
   public getProductsQuery(): Observable<Product[]> {
@@ -90,7 +100,7 @@ export class ProductService {
   //     );
   // }
 
-  public getProductsByDate(limitToLast: number): Observable<Product[]> {
+  public getProductsByDate(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.productsUrl.baseProductsUrl}/new/5`, {observe: 'response'})
       .pipe(map((arr) => arr.body as Product[]),
         catchError(this.handleError<any>(`getProductsNew`)));
@@ -136,7 +146,7 @@ export class ProductService {
   }
 
   public getFullDesc(id: any): Observable<any> {
-    const url = `${this.productsUrl.baseProductsUrl}/get-desc/${id}`;
+    const url = `${this.productsUrl.baseProductsUrl}/additional-information/${id}`;
     return this.http.get<Product>(url)
       .pipe(
         tap((result) => {
@@ -197,12 +207,12 @@ export class ProductService {
 
         return data;
       })
-      .then((dataWithImagePath) => {
+      .then(() => {
         return this.angularFireDatabase
           .object<Product>(url)
           .update(data.product);
       })
-      .then((response) => {
+      .then(() => {
         this.log(`Updated Product ${data.product.name}`);
         return data.product;
       })
@@ -217,7 +227,7 @@ export class ProductService {
     const dbOperation = this.angularFireDatabase
       .object<Product>(url)
       .update(product)
-      .then((response) => {
+      .then(() => {
         this.log(`Updated Product ${product.name}`);
         return product;
       })
@@ -239,7 +249,7 @@ export class ProductService {
           .list('products')
           .set(data.product._id.toString(), data.product);
       }, (error) => error)
-      .then((response) => {
+      .then(() => {
         this.log(`Added Product ${data.product.name}`);
         return data.product;
       })
@@ -262,7 +272,7 @@ export class ProductService {
       .object<Product>(url)
       .remove()
       .then(() => this.log('success deleting' + product.name))
-      .catch((error) => {
+      .catch(() => {
         this.messageService.addError('Delete failed ' + product.name);
         this.handleError('delete product');
       });

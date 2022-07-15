@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost/api',
+  apiUrl: 'http://localhost',
   firebase: {
     apiKey: 'AIzaSyCXVTjTuBUXf-UWlpKfKHjomfPezutmPwI',
     authDomain: 'cas-fee-shop.firebaseapp.com',
