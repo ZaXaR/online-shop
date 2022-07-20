@@ -1,0 +1,12 @@
+.filters {
+  min-width: 200px;
+
+  & > div {
+    margin-bottom: 15px;
+  }
+
+  .filter-title {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+}

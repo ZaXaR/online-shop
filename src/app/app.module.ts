@@ -27,32 +27,32 @@ import {StorageService} from './services/storage/storage.service';
 registerLocaleData(localeUk);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CartComponent,
-    PageNotFoundComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
-    AngularFireStorageModule, // imports firebase/storage only needed for storage features
-    HttpClientModule,
-    SharedModule,
-    CoreModule,
-    ProductsModule,
-    CheckoutModule,
-    AccountModule,
-    AdminModule,
-    ToastrModule.forRoot(), // ToastrModule added
-  ],
-  providers: [
-    StorageService,
-    {provide: LOCALE_ID, useValue: 'uk_UA'},
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        CartComponent,
+        PageNotFoundComponent
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireDatabaseModule,
+        AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+        AngularFireStorageModule, // imports firebase/storage only needed for storage features
+        HttpClientModule,
+        SharedModule,
+        CoreModule,
+        ProductsModule,
+        CheckoutModule,
+        AccountModule,
+        AdminModule,
+        ToastrModule.forRoot(), // ToastrModule added
+    ],
+    providers: [
+        StorageService,
+        {provide: LOCALE_ID, useValue: 'uk_UA'},
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

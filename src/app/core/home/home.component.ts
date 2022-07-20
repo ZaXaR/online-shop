@@ -10,6 +10,7 @@ import { PromoService } from '../shared/promo.service';
 
 import { Product } from '../../models/product.model';
 import { Promo } from '../../models/promo.model';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -29,8 +30,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private productsCache: ProductsCacheService,
     private productService: ProductService,
-    private promoService: PromoService
-  ) {}
+    private promoService: PromoService,
+    private titleService: Title
+  ) {
+    this.titleService.setTitle('Mine Магазин Кави та Чаю');
+  }
 
   ngOnInit() {
     this.productService

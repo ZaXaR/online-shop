@@ -100,7 +100,7 @@ export class ProductService {
   //     );
   // }
 
-  public getProductsByDate(): Observable<Product[]> {
+  public getProductsByDate(limitToLast: number): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.productsUrl.baseProductsUrl}/new/5`, {observe: 'response'})
       .pipe(map((arr) => arr.body as Product[]),
         catchError(this.handleError<any>(`getProductsNew`)));
@@ -145,7 +145,7 @@ export class ProductService {
       .pipe(map((arr) => arr), catchError(this.handleError<any>(`getCategories`)));
   }
 
-  public getFullDesc(id: any): Observable<any> {
+  public getAdditInform(id: any): Observable<any> {
     const url = `${this.productsUrl.baseProductsUrl}/additional-information/${id}`;
     return this.http.get<Product>(url)
       .pipe(

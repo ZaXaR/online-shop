@@ -13,18 +13,9 @@ import {Product} from '../../models/product.model';
 import {User} from '../../models/user.model';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {StorageService} from '../../services/storage/storage.service';
-
-// tslint:disable-next-line:class-name
-export interface iFilter {
-  categories_id?: [] | string;
-  type_coffee?: [] | string;
-  roast_degree?: [] | string;
-  coffee_variety?: [] | string;
-  packaging?: [] | string;
-  type_tea?: [] | string;
-  type_leaf?: [] | string;
-  type_taste?: [] | string;
-}
+import {Title} from '@angular/platform-browser';
+import {IFilter} from '../../core/interfaces/interfaces';
+import {FiltersService} from '../shared/filters.service';
 
 @Component({
   selector: 'app-products',
@@ -41,8 +32,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   currentPagingPage: number;
   title: string;
   paramsObject: Object;
-  filters: iFilter;
-  checkedFilters: iFilter;
+  filters: IFilter;
 
   constructor(
     private productService: ProductService,
@@ -53,7 +43,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     public uiService: UiService,
     private storageService: StorageService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public filtersService: FiltersService,
+    private titleService: Title
   ) {
     this.router.events
       .pipe(
@@ -99,9 +91,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     combineLatest([
       this.productService
         .getProducts(categories, paramsString),
-      this.storageService.categoriesStorage$,
-      this.productService.getFilters()
-    ]).subscribe(([products, category, filters]) => {
+      this.storageService.categoriesStorage$
+    ]).subscribe(([products, category]) => {
       if (Array.isArray(products) && !products.length) {
         this.products = null;
       } else {
@@ -109,9 +100,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         this.setPage(this.currentPagingPage);
       }
       category = category.filter(({name}) => name === categories)[0];
-      this.filters = filters.filter(({categories_id}) => categories_id === category._id)[0];
-      this.checkFiltersChecked();
+      this.filtersService.getFilterByCategory(category);
       this.title = category.abbreviation_ua;
+      this.titleService.setTitle('Mine ' + category.abbreviation_ua);
       this.productsLoading = false;
     });
   }
@@ -146,70 +137,5 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // this.unsubscribe$.next(true);
     this.unsubscribe$.complete();
-  }
-
-  checkFiltersChecked() {
-    this.route.queryParams.subscribe(data => {
-      this.checkedFilters = this.unfreeze(data);
-    });
-  }
-
-  unfreeze(obj) {
-    if (Object.isFrozen(obj)) {
-      return Object.assign({}, obj);
-    }
-    return obj;
-  }
-
-  arrayRemove(arr, value) {
-    return arr.filter((ele) => {
-      // tslint:disable-next-line:triple-equals
-      return ele != value;
-    }, {});
-  }
-
-  onChange(type: string, value, event) {
-    if (event.currentTarget.checked) {
-      if (this.checkedFilters[type]) {
-        if (Array.isArray(this.checkedFilters[type])) {
-          this.checkedFilters[type] = [value, ...this.checkedFilters[type]];
-        } else {
-          this.checkedFilters[type] = [value, this.checkedFilters[type]];
-        }
-        console.log(this.checkedFilters);
-      } else {
-        this.checkedFilters[type] = value;
-      }
-      this.router.navigate(
-        [],
-        {
-          relativeTo: this.route,
-          queryParams: this.checkedFilters,
-          queryParamsHandling: 'merge', // remove to replace all query params by provided
-        });
-    } else {
-      if (Array.isArray(this.checkedFilters[type])) {
-        this.checkedFilters[type] = this.arrayRemove(this.checkedFilters[type], value);
-      } else {
-        delete this.checkedFilters[type];
-      }
-      // console.log(this.checkedFilters);
-      this.router.navigate(
-        ['.'],
-        {
-          relativeTo: this.route,
-          queryParams: this.checkedFilters,
-        }
-      );
-    }
-  }
-
-  isChange(type, value) {
-    const selected = this.checkedFilters[type];
-    if (selected) {
-      return selected.includes(value);
-    } else {
-      return false;
-    }
   }
 }

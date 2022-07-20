@@ -2,21 +2,8 @@
 @import '~scss/helpers/mixins';
 
 //TODO: check
-.wrapper-contaiter {
+.wrapper-container {
   display: flex;
-
-  .filters {
-    min-width: 200px;
-
-    & > div {
-      margin-bottom: 15px;
-    }
-
-    .filter-title {
-      font-size: 18px;
-      margin-bottom: 5px;
-    }
-  }
 
   .products-wrapper {
     width: 100%;

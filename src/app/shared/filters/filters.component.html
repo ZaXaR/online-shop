@@ -1,0 +1,108 @@
+<div class="filters" *ngIf="filters">
+  <div class="type-coffee" *ngIf="filters.type_coffee.length">
+    <label class="filter-title">Тип кави</label>
+    <div class="form-check" *ngFor="let filter of filters.type_coffee; let i = index">
+      <input type="checkbox"
+             class="form-check-input"
+             id="{{ 'type_coffee' + i }}"
+             [value]="filter"
+             (change)="filtersServices.onChange('type_coffee', filter, $event)"
+             [checked]="filtersServices.isChange('type_coffee', filter)"
+      >
+      <label class="form-check-label" for="{{ 'type_coffee' + i }}">
+        {{ filter }}
+      </label>
+    </div>
+  </div>
+  <div class="roast-degree" *ngIf="filters.roast_degree.length">
+    <label class="filter-title">Обжарка</label>
+    <div class="form-check" *ngFor="let filter of filters.roast_degree; let i = index">
+      <input type="checkbox"
+             class="form-check-input"
+             id="{{ 'roast_degree' + i }}"
+             [value]="filter"
+             (change)="filtersServices.onChange('roast_degree', filter, $event)"
+             [checked]="filtersServices.isChange('roast_degree', filter)"
+      >
+      <label class="form-check-label" for="{{ 'roast_degree' + i }}">
+        {{ filter }}
+      </label>
+    </div>
+  </div>
+  <div class="coffee-variety" *ngIf="filters.coffee_variety.length">
+    <label class="filter-title">Сорт кави</label>
+    <div class="form-check" *ngFor="let filter of filters.coffee_variety; let i = index">
+      <input type="checkbox"
+             class="form-check-input"
+             id="{{ 'coffee_variety' + i }}"
+             [value]="filter"
+             (change)="filtersServices.onChange('coffee_variety', filter, $event)"
+             [checked]="filtersServices.isChange('coffee_variety', filter)"
+      >
+      <label class="form-check-label" for="{{ 'coffee_variety' + i }}">
+        {{ filter }}
+      </label>
+    </div>
+  </div>
+
+  <div class="type-tea" *ngIf="filters.type_tea.length">
+    <label class="filter-title">Тип чаю</label>
+    <div class="form-check" *ngFor="let filter of filters.type_tea; let i = index">
+      <input type="checkbox"
+             class="form-check-input"
+             id="{{ 'type_tea' + i }}"
+             [value]="filter"
+             (change)="filtersServices.onChange('type_tea', filter, $event)"
+             [checked]="filtersServices.isChange('type_tea', filter)"
+      >
+      <label class="form-check-label" for="{{ 'type_tea' + i }}">
+        {{ filter }}
+      </label>
+    </div>
+  </div>
+  <div class="type-leaf" *ngIf="filters.type_leaf.length">
+    <label class="filter-title">Тип листа</label>
+    <div class="form-check" *ngFor="let filter of filters.type_leaf; let i = index">
+      <input type="checkbox"
+             class="form-check-input"
+             id="{{ 'type_leaf' + i }}"
+             [value]="filter"
+             (change)="filtersServices.onChange('type_leaf', filter, $event)"
+             [checked]="filtersServices.isChange('type_leaf', filter)"
+      >
+      <label class="form-check-label" for="{{ 'type_leaf' + i }}">
+        {{ filter }}
+      </label>
+    </div>
+  </div>
+  <div class="packaging" *ngIf="filters.packaging.length">
+    <label class="filter-title">Тип упаковки</label>
+    <div class="form-check" *ngFor="let filter of filters.packaging; let i = index">
+      <input type="checkbox"
+             class="form-check-input"
+             id="{{ 'packaging' + i }}"
+             [value]="filter"
+             (change)="filtersServices.onChange('packaging', filter, $event)"
+             [checked]="filtersServices.isChange('packaging', filter)"
+      >
+      <label class="form-check-label" for="{{ 'packaging' + i }}">
+        {{ filter }}
+      </label>
+    </div>
+  </div>
+  <div class="type-taste" *ngIf="filters.type_taste.length">
+    <label class="filter-title">Смак</label>
+    <div class="form-check" *ngFor="let filter of filters.type_taste; let i = index">
+      <input type="checkbox"
+             class="form-check-input"
+             id="{{ 'type_taste' + i }}"
+             [value]="filter"
+             (change)="filtersServices.onChange('type_taste', filter, $event)"
+             [checked]="filtersServices.isChange('type_taste', filter)"
+      >
+      <label class="form-check-label" for="{{ 'type_taste' + i }}">
+        {{ filter }}
+      </label>
+    </div>
+  </div>
+</div>
