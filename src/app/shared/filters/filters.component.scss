@@ -1,3 +1,6 @@
+@import '~scss/helpers/variables';
+@import '~scss/helpers/mixins';
+
 .filters {
   min-width: 200px;
 
@@ -8,5 +11,41 @@
   .filter-title {
     font-size: 18px;
     margin-bottom: 5px;
+  }
+}
+
+@media (max-width: $screen-lg) {
+  ::ng-deep .main-wrapper.offcanvas-open {
+    .filters {
+      animation: slide-in 0.5s forwards !important;
+      -webkit-animation: slide-in 0.5s forwards !important;
+    }
+  }
+
+  @keyframes slide-in {
+    100% {
+      transform: translateX(0%);
+    }
+  }
+
+  :host {
+    position: absolute;
+    z-index: 1;
+
+    .filters {
+      padding: 30px;
+      font-size: 16px;
+      position: relative;
+      transform: translateX(-100%);
+
+      .filter-title {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      > div {
+        margin-bottom: 20px;
+      }
+    }
   }
 }

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {IFilter} from '../../core/interfaces/interfaces';
 import {FiltersService} from '../../products/shared/filters.service';
 
@@ -8,7 +8,7 @@ import {FiltersService} from '../../products/shared/filters.service';
   styleUrls: ['./filters.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default
 })
-export class FiltersComponent implements OnInit {
+export class FiltersComponent implements OnInit, OnDestroy {
   filters: IFilter;
 
   constructor(public filtersServices: FiltersService) {
@@ -21,4 +21,7 @@ export class FiltersComponent implements OnInit {
 
   }
 
+  ngOnDestroy() {
+    // this.filtersServices.filterCategoryStorageReplay$.unsubscribe();
+  }
 }

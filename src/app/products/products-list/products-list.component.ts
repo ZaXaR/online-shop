@@ -16,6 +16,7 @@ import {StorageService} from '../../services/storage/storage.service';
 import {Title} from '@angular/platform-browser';
 import {IFilter} from '../../core/interfaces/interfaces';
 import {FiltersService} from '../shared/filters.service';
+import {OffcanvasService} from '../../core/shared/offcanvas.service';
 
 @Component({
   selector: 'app-products',
@@ -45,7 +46,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     public filtersService: FiltersService,
-    private titleService: Title
+    private titleService: Title,
+    private offcanvasService: OffcanvasService
   ) {
     this.router.events
       .pipe(
@@ -137,5 +139,10 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // this.unsubscribe$.next(true);
     this.unsubscribe$.complete();
+  }
+
+  onFilterToggle(e: Event) {
+    this.offcanvasService.openOffcanvasNavigationFilter();
+    e.preventDefault();
   }
 }

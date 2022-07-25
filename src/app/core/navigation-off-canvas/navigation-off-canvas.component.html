@@ -172,7 +172,7 @@
 
 <!-- Off-Canvas Mobile Menu-->
 <div class="offcanvas-container" id="mobile-menu"
-     [ngClass]="{'active': offcanvasService.offcanvasNavigationOpen | async}">
+     [ngClass]="{'active': offcanvasService.offcanvasNavigationMobileMenuOpen | async}">
   <a *ngIf="user" class="account-link" routerLink="/account/profile" (click)="onNavigationClick()">
     <!-- <div class="user-ava">
       <img src="img/user-ava-md.jpg" alt="Daniel Adams">
@@ -193,7 +193,7 @@
         </span>
       </li>
       <li *ngFor="let item of categories" routerLinkActive="active">
-        <a [routerLink]="'/products/'+item.name" href="">
+        <a [routerLink]="'/products/'+item.name" href="" (click)="onNavigationClick()">
           <span>{{item.abbreviation_ua}}</span>
         </a>
       </li>
