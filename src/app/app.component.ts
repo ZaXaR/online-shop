@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { OffcanvasService } from './core/shared/offcanvas.service';
+import {Component} from '@angular/core';
+import {OffcanvasService} from './core/shared/offcanvas.service';
+import {SeoService} from './services/seo/seo.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,8 @@ import { OffcanvasService } from './core/shared/offcanvas.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public products: any;
 
-  constructor(public offcanvasService: OffcanvasService) {}
+  constructor(public offcanvasService: OffcanvasService, private seoService: SeoService) {
+    this.seoService.setMetaTitle('Mine | Магазин Кави та Чаю');
+  }
 }

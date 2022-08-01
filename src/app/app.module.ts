@@ -23,36 +23,38 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import localeUk from '@angular/common/locales/uk';
 import {registerLocaleData} from '@angular/common';
 import {StorageService} from './services/storage/storage.service';
+import {SeoService} from './services/seo/seo.service';
 
 registerLocaleData(localeUk);
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        CartComponent,
-        PageNotFoundComponent
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireDatabaseModule,
-        AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
-        AngularFireStorageModule, // imports firebase/storage only needed for storage features
-        HttpClientModule,
-        SharedModule,
-        CoreModule,
-        ProductsModule,
-        CheckoutModule,
-        AccountModule,
-        AdminModule,
-        ToastrModule.forRoot(), // ToastrModule added
-    ],
-    providers: [
-        StorageService,
-        {provide: LOCALE_ID, useValue: 'uk_UA'},
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    CartComponent,
+    PageNotFoundComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    AngularFireStorageModule, // imports firebase/storage only needed for storage features
+    HttpClientModule,
+    SharedModule,
+    CoreModule,
+    ProductsModule,
+    CheckoutModule,
+    AccountModule,
+    AdminModule,
+    ToastrModule.forRoot(), // ToastrModule added
+  ],
+  providers: [
+    StorageService,
+    SeoService,
+    {provide: LOCALE_ID, useValue: 'uk_UA'},
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

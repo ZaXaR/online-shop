@@ -13,10 +13,10 @@ import {Product} from '../../models/product.model';
 import {User} from '../../models/user.model';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {StorageService} from '../../services/storage/storage.service';
-import {Title} from '@angular/platform-browser';
 import {IFilter} from '../../core/interfaces/interfaces';
 import {FiltersService} from '../shared/filters.service';
 import {OffcanvasService} from '../../core/shared/offcanvas.service';
+import {SeoService} from '../../services/seo/seo.service';
 
 @Component({
   selector: 'app-products',
@@ -46,8 +46,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     public filtersService: FiltersService,
-    private titleService: Title,
-    private offcanvasService: OffcanvasService
+    private offcanvasService: OffcanvasService,
+    private seoService: SeoService
   ) {
     this.router.events
       .pipe(
@@ -104,7 +104,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       category = category.filter(({name}) => name === categories)[0];
       this.filtersService.getFilterByCategory(category);
       this.title = category.abbreviation_ua;
-      this.titleService.setTitle('Mine ' + category.abbreviation_ua);
+      this.seoService.setMetaTitle('Mine | ' + category.abbreviation_ua);
       this.productsLoading = false;
     });
   }

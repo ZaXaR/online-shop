@@ -304,28 +304,9 @@ header {
   padding-left: 30px;
 
   a.logo {
-    color: $white-color;
     text-decoration: none;
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    justify-content: space-between;
-    width: 75px;
-    font-size: 22px;
-
-    h2 {
-      margin: -13px 0;
-      font-size: 32px;
-      font-weight: bold;
-
-      &:first-child {
-        color: blue;
-      }
-
-      &:last-child {
-        color: yellow;
-      }
-    }
+    width: 120px;
+    display: block;
   }
 }
 
@@ -340,7 +321,7 @@ header {
     justify-content: end;
   }
   .logo-wrap {
-    padding-left: 0px;
+    padding-left: 0;
     padding-right: 20px;
   }
 }
@@ -413,14 +394,9 @@ header {
   font-size: $offcanvas-toggle-icon-size;
   line-height: 1;
   cursor: pointer;
-  text: {
-    align: center;
-    decoration: none;
-  }
 
   &::before {
     display: inline-block;
-    font-family: feather;
     content: '\e120';
   }
 

@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {IFilter} from '../../core/interfaces/interfaces';
 import {ReplaySubject} from 'rxjs';
 import {ProductService} from './product.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {filter, map} from 'rxjs/operators';
 
 @Injectable()
 export class FiltersService {
@@ -17,7 +18,13 @@ export class FiltersService {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.getFilters();
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        map((event: NavigationEnd) => event.url))
+      .subscribe(() => {
+        this.getFilters();
+      });
   }
 
   getFilters() {

@@ -1,7 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Title, Meta} from '@angular/platform-browser';
 import {Params} from '@angular/router';
 
 import {combineLatest, Subject} from 'rxjs';
@@ -17,6 +16,7 @@ import {ProductService} from '../shared/product.service';
 import {Product} from '../../models/product.model';
 import {User} from '../../models/user.model';
 import {StorageService} from '../../services/storage/storage.service';
+import {SeoService} from '../../services/seo/seo.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -56,10 +56,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private productRatingService: ProductRatingService,
     private storageService: StorageService,
-    private titleService: Title,
-    private metaService: Meta
+    private seoService: SeoService
   ) {
-    this.titleService.setTitle('Mine Магазин Кави та Чаю');
   }
 
   ngOnInit(): void {
@@ -93,10 +91,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       .subscribe(([product, category, description]) => {
         if (product) {
           this.product = <Product>product;
-          this.titleService.setTitle(product.nameOfProduct);
+          this.seoService.setMetaTitle(product.nameOfProduct);
           if (description.dataDescription) {
             this.product.fullDesc = description.dataDescription.fullDesc;
-            this.metaService.updateTag({name: product.nameOfProduct, content: description.dataDescription.fullDesc});
+            this.seoService.setMetaDescription(description.dataDescription.fullDesc);
           }
           const data = category.filter(({name}) => name === this.product.options.categories.name);
           this.title = data[0];
