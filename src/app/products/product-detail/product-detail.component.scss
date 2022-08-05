@@ -42,6 +42,7 @@
     top: 25px;
     left: 15px;
   }
+
   .product-thumbnails {
     display: block;
     margin: 0;
@@ -93,16 +94,62 @@
 .product-detail {
 
   &.loading {
-      min-height: 200px;
-      background: url('../../../img/loading.gif') center center no-repeat;
+    min-height: 200px;
+    background: url('../../../img/loading.gif') center center no-repeat;
+  }
+}
+
+.product-features {
+  margin-bottom: 15px;
+
+  .product-feature {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+
+    dt {
+      position: relative;
+      align-self: flex-start;
+      width: 40%;
+
+      &:before {
+        position: absolute;
+        left: 0;
+        bottom: 4px;
+        display: block;
+        width: 100%;
+        border-bottom: 1px dotted #d2d2d2;
+        content: "";
+      }
+
+      span {
+        position: relative;
+        display: inline-block;
+        padding-right: 16px;
+        background-color: #fff;
+      }
+    }
+
+    dd {
+      width: 60%;
+      padding-left: 16px;
+      box-sizing: border-box;
+      margin: 0;
+    }
   }
 }
 
 // IE10+ specific styles
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-  .product-gallery .gallery-item { display: none !important; }
+  .product-gallery .gallery-item {
+    display: none !important;
+  }
 }
+
 // Microsoft Edge specific styles
 @supports (-ms-ime-align: auto) {
-  .product-gallery .gallery-item { display: none !important; }
+  .product-gallery .gallery-item {
+    display: none !important;
+  }
 }

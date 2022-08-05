@@ -28,6 +28,18 @@ export class Product {
         abbreviation: string,
         abbreviation_ua: string
       }
+    },
+    public filter?: {
+      type_coffee: string[],
+      coffee_variety: string[],
+      roast_degree: string[],
+      type_tea: string[],
+      type_leaf: string[],
+      type_taste: string[],
+      packaging: string[],
+    },
+    public state?: {
+      name: string[],
     }
   ) {
   }
