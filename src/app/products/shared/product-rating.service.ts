@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable ,  from as fromPromise ,  of } from 'rxjs';
 import {AngularFireDatabase} from '@angular/fire/compat/database';
-
 import { AuthService } from '../../account/shared/auth.service';
 import { MessageService } from '../../messages/message.service';
-import { FileUploadService } from './file-upload.service';
 
 import { ProductsUrl } from './productsUrl';
 import { Product } from '../../models/product.model';
@@ -12,7 +10,7 @@ import { User } from '../../models/user.model';
 
 @Injectable()
 export class ProductRatingService {
-  private productsUrl = ProductsUrl.productsUrl;
+  private productsUrl = ProductsUrl.baseProductsUrl;
   private user: User;
 
   constructor(
@@ -78,7 +76,7 @@ export class ProductRatingService {
     return updates;
   }
 
-  private calculateOverallRating(product: Product, rating: number): number {
+  calculateOverallRating(product: Product, rating: number): number {
     // Calculate and add new overall rating
     const currentRating =
       <number>Object.values(product.ratings).reduce(

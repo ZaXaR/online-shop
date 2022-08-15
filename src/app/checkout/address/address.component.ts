@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
@@ -46,17 +46,17 @@ export class AddressComponent implements OnInit, OnDestroy {
       ),
       address1: new FormControl(null, Validators.required),
       address2: new FormControl(null),
-      zip: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(/^\d\d\d\d$/)
-      ]),
-      city: new FormControl(null, Validators.required),
+      // zip: new FormControl(null, [
+      //   Validators.required,
+      //   Validators.pattern(/^\d\d\d\d$/)
+      // ]),
+      // city: new FormControl(null, Validators.required),
       email: new FormControl(
         this.user && this.user.email,
         Validators.email
       ),
       phone: new FormControl(null),
-      company: new FormControl(null),
+      // company: new FormControl(null),
       country: new FormControl({ value: this.countries[0], disabled: false })
     });
   }
@@ -74,8 +74,8 @@ export class AddressComponent implements OnInit, OnDestroy {
       lastname: 'Muster',
       address1: 'Musterstrasse 13',
       address2: '',
-      zip: 1234,
-      city: 'Musterhausen',
+      // zip: 1234,
+      // city: 'Musterhausen',
       email: 'hans.muster@muster.com',
       phone: '+41791234567',
       company: '',

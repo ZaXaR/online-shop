@@ -1,4 +1,4 @@
-<app-page-title title="Cart" [children]="[{title: 'Cart'}]"></app-page-title>
+<app-page-title title="Кошик" [children]="[{title: 'Кошик'}]"></app-page-title>
 
 
       <!-- Page Content-->
@@ -21,7 +21,7 @@
                 <th class="text-center">Ціна</th>
                 <th class="text-center">Усього</th>
                 <th class="text-right">
-                  <button class="btn btn-sm btn-outline-danger" (click)="onClearCart($event)">Clear Cart</button>
+                  <button class="btn btn-sm btn-outline-danger" (click)="onClearCart($event)">Очистити кошик</button>
                 </th>
               </tr>
             </thead>
@@ -30,12 +30,12 @@
               <tr *ngFor="let item of items">
                 <td>
                   <div class="product-item">
-                    <a class="product-thumb" routerLink="/products/{{item.product.id}}">
-                      <img [src]="item.product.imageURLs[0]" alt="Product">
+                    <a class="product-thumb" routerLink="/products/item/{{item.product._id}}">
+                      <img src="https://tab.mine.in.ua/uploads/{{item.product.imageURLs[0]}}" alt="{{item.product.nameOfProduct}}">
                     </a>
                     <div class="product-info">
                       <h4 class="product-title">
-                        <a routerLink="/products/{{item.product.id}}">{{item.product.name}}</a>
+                        <a routerLink="/products/item/{{item.product._id}}">{{item.product.nameOfProduct}}</a>
                       </h4>
                       <!-- <span>
                         <em>Size:</em> 10.5</span>
@@ -58,14 +58,14 @@
                   </div>
                 </td>
                 <td class="text-center text-lg text-medium"><app-price [product]="item.product"></app-price></td>
-                <td class="text-center text-lg text-medium">{{ (item.product.price * item.amount) | currency }}</td>
+                <td class="text-center text-lg text-medium">{{ (item.product.price * item.amount) | currency:"UAH":"symbol" }}</td>
                 <td class="text-right">
                   <a class="remove-from-cart"
                     href="#"
                     data-toggle="tooltip"
-                    title="Remove item"
+                    title="Видалити продукт"
                     (click)="onRemoveItem($event, item)">
-                    <i class="icon-cross"></i>
+                    <i class="fa fa-times" aria-hidden="true"></i>
                   </a>
                 </td>
               </tr>
@@ -74,7 +74,7 @@
             <ng-template #noItemsInCart>
               <tbody>
                 <tr>
-                  <td colspan="5">There are no items in your cart..</td>
+                  <td colspan="5">Ваш кошик порожній.</td>
                 </tr>
               </tbody>
             </ng-template>
@@ -89,19 +89,20 @@
               <button class="btn btn-outline-primary btn-sm" type="submit">Apply Coupon</button>
             </form> -->
           </div>
-          <div class="column text-lg">Total:
-            <span class="text-medium">{{ total | currency }}</span>
+          <div class="column text-lg">До сплати:
+            <span class="text-medium">{{ total | currency:'UAH':'symbol'}}</span>
           </div>
         </div>
         <div class="shopping-cart-footer">
-          <div class="column">
-            <a class="btn btn-outline-secondary" routerLink="/products">
-              <i class="icon-arrow-left"></i>&nbsp;Back to Shopping</a>
-          </div>
+<!--          <div class="column">-->
+<!--            <a class="btn btn-outline-secondary" routerLink="/products">-->
+<!--              <i class="icon-arrow-left"></i>&nbsp;Продовжити покупки-->
+<!--            </a>-->
+<!--          </div>-->
           <div class="column">
             <!-- <a class="btn btn-primary" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check"
               data-toast-title="Your cart" data-toast-message="is updated successfully!">Update Cart</a> -->
-            <a class="btn btn-success" routerLink="/checkout">Checkout</a>
+            <a class="btn btn-success" routerLink="/checkout">Оформити замовлення</a>
           </div>
         </div>
 

@@ -16,15 +16,11 @@ export class PaymentComponent implements OnInit {
   constructor(private checkoutService: CheckoutService) { }
 
   ngOnInit() {
-    this.paypalLoggedIn = false;
-    this.paymentMethods = ['Paypal', 'Prepayment'];
+    // this.paypalLoggedIn = false;
+    this.paymentMethods = ['Безготівковий', 'Готівкою'];
     this.formPayment = new FormGroup({
       'paymentMethod': new FormControl(this.paymentMethods[0], Validators.required)
     });
-  }
-
-  public onPaypalLogin(event: Event) {
-    this.paypalLoggedIn = true;
   }
 
   public onBack() {

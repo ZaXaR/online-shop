@@ -14,6 +14,7 @@ import { CartItem } from '../../models/cart-item.model';
 import { Customer } from '../../models/customer.model';
 import { Order } from '../../models/order.model';
 import { User } from '../../models/user.model';
+import {ProductService} from '../../products/shared/product.service';
 
 @Component({
   selector: 'app-checkout-review',
@@ -31,6 +32,7 @@ export class ReviewComponent implements OnInit, OnDestroy {
 
   constructor(
     private cartService: CartService,
+    private productService: ProductService,
     private checkoutService: CheckoutService,
     private orderService: OrderService,
     private router: Router,
@@ -77,33 +79,36 @@ export class ReviewComponent implements OnInit, OnDestroy {
   }
 
   private submitUserOrder(order, total, userUid) {
+    console.log('user submit');
     this.orderService
       .addUserOrder(order, total, userUid)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (response) => {
+          console.log(response);
           this.cartService.clearCart();
           this.checkoutService.resetSteps();
           this.router.navigate(['/order-complete']);
         },
         (error) => {
-          this.messageService.addError('Could not submit order, try again.');
+          this.messageService.addError(error + ' Could not submit order, try again.');
         }
       );
   }
 
   private submitAnonOrder(order, total) {
-    this.orderService
+    this.productService
       .addAnonymousOrder(order, total)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (response) => {
+          console.log(response);
           this.cartService.clearCart();
           this.checkoutService.resetSteps();
           this.router.navigate(['/order-complete']);
         },
         (error) => {
-          this.messageService.addError('Could not submit order, try again.');
+          this.messageService.addError(error + ' Could not submit order, try again.');
         }
       );
   }

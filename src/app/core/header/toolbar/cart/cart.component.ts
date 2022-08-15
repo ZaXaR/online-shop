@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
 
-import { CartService } from '../../../../cart/shared/cart.service';
+import {CartService} from '../../../../cart/shared/cart.service';
 
-import { CartItem } from '../../../../models/cart-item.model';
+import {CartItem} from '../../../../models/cart-item.model';
 
 @Component({
   selector: 'app-toolbar-cart',
@@ -16,7 +16,8 @@ export class ToolbarCartComponent implements OnInit, OnDestroy {
   public total: number;
   private cartSubscription: Subscription;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService) {
+  }
 
   ngOnInit() {
     this.items = this.cartService.getItems();

@@ -13,7 +13,15 @@ import {catchError, Observable, of} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 import {fromPromise} from 'rxjs-compat/observable/fromPromise';
 
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Order} from '../../models/order.model';
+
+// const httpOptions = {
+//   headers: new HttpHeaders({
+//     'Content-Type':  'application/json'
+//     // Authorization: 'bezkoder-secret-key'
+//   })
+// };
 
 @Injectable()
 export class ProductService {
@@ -193,7 +201,7 @@ export class ProductService {
   //   );
 
   public updateProduct(data: { product: Product; files: FileList }) {
-    const url = `${this.productsUrl.productsUrl}/${data.product._id}`;
+    const url = `${this.productsUrl.baseProductsUrl}/${data.product._id}`;
 
     if (!data.files.length) {
       return this.updateProductWithoutNewImage(data.product, url);
@@ -264,7 +272,7 @@ export class ProductService {
   }
 
   public deleteProduct(product: Product) {
-    const url = `${this.productsUrl.productsUrl}/${product._id}`;
+    const url = `${this.productsUrl.baseProductsUrl}/${product._id}`;
 
     this.uploadService.deleteFile(product.imageRefs);
 
@@ -276,5 +284,39 @@ export class ProductService {
         this.messageService.addError('Delete failed ' + product.name);
         this.handleError('delete product');
       });
+  }
+
+  // Order
+  addAnonymousOrder(order: Order, total: number): Observable<any> {
+    const orderWithMetaData = {
+      ...order,
+      ...this.constructOrderMetaData(),
+      total
+    };
+    // console.log(orderWithMetaData);
+    // console.log(this.productsUrl.baseOnlineShopUrl);
+    return this.http.post<any>(this.productsUrl.baseOnlineShopUrl, orderWithMetaData, {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    })
+      .pipe(
+        catchError(this.handleError('addHero'))
+      );
+
+    // const databaseOperation = this.store
+    //   .list('orders')
+    //   .push(orderWithMetaData)
+    //   .then((response) => response, (error) => error);
+    //
+    // return fromPromise(databaseOperation);
+  }
+
+  constructOrderMetaData() {
+    return {
+      number: (Math.random() * 10000000000).toString().split('.')[0],
+      date: new Date().toString(),
+      status: 'In Progress'
+    };
   }
 }

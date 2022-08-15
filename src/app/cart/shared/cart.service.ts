@@ -1,5 +1,4 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Product } from '../../models/product.model';
 import { CartItem } from '../../models/cart-item.model';
 import { MessageService } from '../../messages/message.service';
 
@@ -30,10 +29,10 @@ export class CartService {
           cartItem.amount += item.amount;
         }
       });
-      this.messageService.add('Amount in cart changed for: ' + item.product.name);
+      this.messageService.add('Amount in cart changed for: ' + item.product.nameOfProduct);
     } else {
       this.cartItems.push(item);
-      this.messageService.add('Added to cart: ' + item.product.name);
+      this.messageService.add('Added to cart: ' + item.product.nameOfProduct);
     }
     this.itemsChanged.emit(this.cartItems.slice());
   }

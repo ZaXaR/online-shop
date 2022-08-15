@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CheckoutService } from '../shared/checkout.service';
-import { Customer } from '../../models/customer.model';
 
 @Component({
   selector: 'app-checkout-shipping',
@@ -17,16 +16,22 @@ export class ShippingComponent implements OnInit {
   ngOnInit() {
     this.shippingMethods = [
       {
-        method: 'Swiss Post Priority',
-        time: '1 - 2 days',
-        fee: 11,
-        value: 'priority'
+        method: 'Самовивіз з магазину',
+        time: '',
+        fee: 0,
+        value: 'economy'
       },
       {
-        method: 'Swiss Post Economy',
-        time: 'up to one week',
-        fee: 9,
-        value: 'economy'
+        method: 'Доставка на офіс Bandapixels',
+        time: 'Протягом 24 годин',
+        fee: 0,
+        value: 'bandapixels'
+      },
+      {
+        method: 'Нова пошта',
+        time: 'до одного тижня',
+        fee: 30,
+        value: 'priority'
       }
     ];
     this.formShipping = new FormGroup({
