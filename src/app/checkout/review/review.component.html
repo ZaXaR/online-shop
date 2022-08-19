@@ -13,7 +13,7 @@
       <tr *ngFor="let item of items; let i = index">
         <td>
           <div class="product-item">
-            <a class="product-thumb" routerLink="/products/{{item.product._id}}">
+            <a class="product-thumb" routerLink="/products/item/{{item.product._id}}">
               <img src="https://tab.mine.in.ua/uploads/{{item.product.imageURLs[0]}}" alt="{{item.product.nameOfProduct}}">
             </a>
             <div class="product-info">

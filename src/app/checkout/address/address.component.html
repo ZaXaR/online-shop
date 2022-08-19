@@ -50,23 +50,23 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="form-group">
-        <label for="country">Country</label>
+        <label for="country">Місто</label>
         <select class="form-control" id="country" name="country" formControlName="country">
           <option *ngFor="let country of countries" value="{{country}}">{{country}}</option>
         </select>
       </div>
     </div>
   </div>
-  <h4>Shipping Address</h4>
-  <hr class="padding-bottom-1x">
-  <div class="form-group">
-    <label class="custom-control custom-checkbox">
-      <input class="custom-control-input" type="checkbox" checked>
-      <span class="custom-control-indicator"></span>
-      <span class="custom-control-description">Same as billing address</span>
-      <a href="" (click)="onFillForm($event)">Debug: Fill out form</a>
-    </label>
-  </div>
+<!--  <h4>Shipping Address</h4>-->
+<!--  <hr class="padding-bottom-1x">-->
+<!--  <div class="form-group">-->
+<!--    <label class="custom-control custom-checkbox">-->
+<!--      <input class="custom-control-input" type="checkbox" checked>-->
+<!--      <span class="custom-control-indicator"></span>-->
+<!--      <span class="custom-control-description">Same as billing address</span>-->
+<!--      <a href="" (click)="onFillForm($event)">Debug: Fill out form</a>-->
+<!--    </label>-->
+<!--  </div>-->
 </form>
 
 <app-checkout-footer [buttons]="['backToCart', 'continue']"  (continue)="onContinue()" [continueEnabled]="formAddress.valid"></app-checkout-footer>
