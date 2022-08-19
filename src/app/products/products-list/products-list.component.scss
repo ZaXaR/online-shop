@@ -1,27 +1,42 @@
 @import '~scss/helpers/variables';
 @import '~scss/helpers/mixins';
 
+//TODO: check
+.wrapper-container {
+  display: flex;
+
+  .products-wrapper {
+    width: 100%;
+  }
+}
+
 .products-list {
 
-    &.loading {
-        min-height: 200px;
-        background: url('../../../img/loading.gif') center center no-repeat;
-    }
+  &.loading {
+    min-height: 200px;
+    background: url('../../../img/loading.gif') center center no-repeat;
+  }
 }
 
 .shop-toolbar {
   display: table;
   width: 100%;
+
   > .column {
     display: table-cell;
     vertical-align: middle;
-    &:last-child { text-align: right; }
+
+    &:last-child {
+      text-align: right;
+    }
   }
+
   @media (max-width: $screen-sm) {
     > .column {
       display: block;
       width: 100%;
       text-align: center;
+
       &:last-child {
         padding-top: $grid-vertical-step;
         text-align: center;
@@ -29,6 +44,7 @@
     }
   }
 }
+
 .shop-sorting {
   label,
   .form-control,
@@ -36,7 +52,11 @@
     display: inline-block;
     vertical-align: middle;
   }
-  span { padding: 8px 0; }
+
+  span {
+    padding: 8px 0;
+  }
+
   label {
     margin: 0;
     padding: 8px 5px 8px 0;
@@ -46,11 +66,13 @@
       weight: normal;
     }
   }
+
   .form-control {
     width: 100%;
     max-width: 186px;
     margin-right: 10px;
   }
+
   @media (max-width: $screen-sm) {
     label, .form-control {
       display: block;
@@ -64,9 +86,11 @@
     }
   }
 }
-.shop-view {
+
+.shop-view, .shop-filter {
   display: inline-block;
   @include clearfix;
+
   > a {
     display: block;
     width: $shop-view-size;
@@ -78,6 +102,7 @@
     border: 1px solid $border-color;
     border-radius: 50%;
     background-color: $shop-view-bg-color;
+
     span {
       display: block;
       position: relative;
@@ -85,24 +110,36 @@
       height: 3px;
       margin-bottom: 3px;
       background-color: $shop-view-color;
+
       &::before,
       &::after {
         display: block;
         position: absolute;
         background-color: $shop-view-color;
       }
-      &:last-child { margin-bottom: 0; }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
-    &:hover { background-color: $shop-view-hover-bg-color; }
+
+    &:hover {
+      background-color: $shop-view-hover-bg-color;
+    }
+
     &.active {
       border-color: $shop-view-active-bg-color;
       background-color: $shop-view-active-bg-color;
       cursor: default;
       pointer-events: none;
+
       span,
       span::before,
-      span::after { background-color: $white-color; }
+      span::after {
+        background-color: $white-color;
+      }
     }
+
     &.grid-view span {
       &::before,
       &::after {
@@ -111,9 +148,16 @@
         height: 3px;
         content: '';
       }
-      &::before { left: 6px; }
-      &::after { left: 12px; }
+
+      &::before {
+        left: 6px;
+      }
+
+      &::after {
+        left: 12px;
+      }
     }
+
     &.list-view span {
       &::before {
         top: 1px;

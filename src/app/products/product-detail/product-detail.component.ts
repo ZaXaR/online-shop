@@ -16,6 +16,7 @@ import {ProductService} from '../shared/product.service';
 import {Product} from '../../models/product.model';
 import {User} from '../../models/user.model';
 import {StorageService} from '../../services/storage/storage.service';
+import {SeoService} from '../../services/seo/seo.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -54,7 +55,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     private productsCacheService: ProductsCacheService,
     private productService: ProductService,
     private productRatingService: ProductRatingService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private seoService: SeoService
   ) {
   }
 
@@ -83,11 +85,17 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     combineLatest([
       this.productService
         .getProduct(id),
-      this.storageService.categoriesStorage$
+      this.storageService.categoriesStorage$,
+      this.productService.getAdditInform(id)
     ]).pipe(takeUntil(this.unsubscribe$))
-      .subscribe(([product, category]) => {
+      .subscribe(([product, category, description]) => {
         if (product) {
           this.product = <Product>product;
+          this.seoService.setMetaTitle(product.nameOfProduct);
+          if (description.dataDescription) {
+            this.product.fullDesc = description.dataDescription.fullDesc;
+            this.seoService.setMetaDescription(description.dataDescription.fullDesc);
+          }
           const data = category.filter(({name}) => name === this.product.options.categories.name);
           this.title = data[0];
           this.setupProduct();
@@ -135,33 +143,20 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  private checkCategories() {
-    const categories = Object.keys(this.product.categories).map(
-      (category, index, inputArray) => {
-        category = index < inputArray.length - 1 ? category + ',' : category;
-        return category;
-      }
-    );
-    this.product.categories =
-      categories.length >= 1 && !Array.isArray(this.product.categories)
-        ? categories
-        : [];
-  }
-
-  private checkRatings() {
-    this.ratingCount = this.product.ratings
-      ? Object.keys(this.product.ratings).length
-      : 0;
-
-    // check for existing rating
-    if (
-      this.product.ratings &&
-      this.user &&
-      Object.keys(this.product.ratings).includes(this.user.uid)
-    ) {
-      this.selectedRating = this.product.ratings[this.user.uid];
-    }
-  }
+  // private checkRatings() {
+  //   this.ratingCount = this.product.ratings
+  //     ? Object.keys(this.product.ratings).length
+  //     : 0;
+  //
+  //   // check for existing rating
+  //   if (
+  //     this.product.ratings &&
+  //     this.user &&
+  //     Object.keys(this.product.ratings).includes(this.user.uid)
+  //   ) {
+  //     this.selectedRating = this.product.ratings[this.user.uid];
+  //   }
+  // }
 
   ngOnDestroy() {
     // this.unsubscribe$.next();

@@ -8,6 +8,9 @@
     padding-top: floor($grid-vertical-step * 2); //~48px;
   }
 }
+.logo {
+  max-width: 110px;
+}
 .footer-copyright {
   margin: 0;
   padding: {

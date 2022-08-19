@@ -171,7 +171,8 @@
 </div> -->
 
 <!-- Off-Canvas Mobile Menu-->
-<div class="offcanvas-container" id="mobile-menu" [ngClass]="{'active': offcanvasService.offcanvasNavigationOpen | async}">
+<div class="offcanvas-container" id="mobile-menu"
+     [ngClass]="{'active': offcanvasService.offcanvasNavigationMobileMenuOpen | async}">
   <a *ngIf="user" class="account-link" routerLink="/account/profile" (click)="onNavigationClick()">
     <!-- <div class="user-ava">
       <img src="img/user-ava-md.jpg" alt="Daniel Adams">
@@ -184,27 +185,6 @@
   </a>
   <nav class="offcanvas-menu">
     <ul class="menu">
-      <li *ngIf="!user" routerLinkActive="active">
-        <span>
-          <a routerLink="/register-login" (click)="onNavigationClick()">
-            <span>Регістрація/Авторизація</span>
-          </a>
-        </span>
-      </li>
-      <li *ngIf="user" routerLinkActive="active">
-        <span>
-          <a routerLink="/account/profile" (click)="onNavigationClick()">
-            <span>Мій профіль</span>
-          </a>
-        </span>
-      </li>
-      <li *ngIf="user" routerLinkActive="active">
-        <span>
-          <a routerLink="/account/orders" (click)="onNavigationClick()">
-            <span>Мої закази</span>
-          </a>
-        </span>
-      </li>
       <li routerLinkActive="active">
         <span>
           <a routerLink="/home" (click)="onNavigationClick()">
@@ -212,28 +192,9 @@
           </a>
         </span>
       </li>
-      <li routerLinkActive="active">
-        <span>
-          <a routerLink="/products" (click)="onNavigationClick()">
-            <span>Каталог</span>
-          </a>
-        </span>
-      </li>
-      <li routerLinkActive="active">
-        <span>
-          <a routerLink="/cart" (click)="onNavigationClick()">
-            <span>Кошик</span>
-          </a>
-        </span>
-      </li>
-      <li *ngIf="user && user.roles.admin" routerLinkActive="active">
-        <a routerLink="/admin/add" (click)="onNavigationClick()">
-          <span>Додати товар</span>
-        </a>
-      </li>
-      <li *ngIf="user">
-        <a href="" (click)="onLogout($event)">
-          <span>Вийти</span>
+      <li *ngFor="let item of categories" routerLinkActive="active">
+        <a [routerLink]="'/products/'+item.name" href="" (click)="onNavigationClick()">
+          <span>{{item.abbreviation_ua}}</span>
         </a>
       </li>
     </ul>

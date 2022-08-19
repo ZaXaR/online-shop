@@ -23,6 +23,7 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import localeUk from '@angular/common/locales/uk';
 import {registerLocaleData} from '@angular/common';
 import {StorageService} from './services/storage/storage.service';
+import {SeoService} from './services/seo/seo.service';
 
 registerLocaleData(localeUk);
 
@@ -50,6 +51,7 @@ registerLocaleData(localeUk);
   ],
   providers: [
     StorageService,
+    SeoService,
     {provide: LOCALE_ID, useValue: 'uk_UA'},
   ],
   bootstrap: [AppComponent]

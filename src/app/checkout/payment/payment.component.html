@@ -1,19 +1,18 @@
-<h4>
-  Choose Payment Method</h4>
+<h4>Виберіть метод оплати</h4>
 <hr class="padding-bottom-1x">
 <form [formGroup]="formPayment">
 <div class="table-responsive">
   <table class="table">
     <thead class="thead-default">
       <tr>
-        <th>Payment method</th>
+        <th>Метод оплати</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let paymentMethod of paymentMethods">
         <td class="align-middle">
-          <img src="img/paypal.svg" alt="{{paymentMethod}}" *ngIf="paymentMethod === 'Paypal'" /><span *ngIf="paymentMethod !== 'Paypal'" class="text-medium">{{paymentMethod}}</span>
+          <span class="text-medium">{{paymentMethod}}</span>
         </td>
         <td class="align-middle">
           <label class="custom-control custom-radio">

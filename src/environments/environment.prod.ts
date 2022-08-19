@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  apiUrl: 'https://tab.mine.in.ua',
   firebase: {
     apiKey: 'AIzaSyCXVTjTuBUXf-UWlpKfKHjomfPezutmPwI',
     authDomain: 'cas-fee-shop.firebaseapp.com',

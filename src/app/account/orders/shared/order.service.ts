@@ -1,20 +1,26 @@
-import { Injectable, OnInit } from '@angular/core';
-import { Observable ,  of ,  from as fromPromise } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {Observable, of, from as fromPromise} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
 import {AngularFireDatabase} from '@angular/fire/compat/database';
 
-import { Order } from '../../../models/order.model';
+import {Order} from '../../../models/order.model';
 
-import { MessageService } from '../../../messages/message.service';
-import { AuthService } from '../../shared/auth.service';
+import {MessageService} from '../../../messages/message.service';
+import {AuthService} from '../../shared/auth.service';
+import {ProductsUrl} from '../../../products/shared/productsUrl';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class OrderService {
+  private productsUrl = ProductsUrl;
+
   constructor(
     private messageService: MessageService,
     private authService: AuthService,
+    private http: HttpClient,
     private store: AngularFireDatabase
-  ) {}
+  ) {
+  }
 
   public getOrders() {
     return this.authService.user
@@ -33,7 +39,7 @@ export class OrderService {
   public addUserOrder(order: Order, total: number, user: string) {
     const orderWithMetaData = {
       ...order,
-      ...this.constructOrderMetaData(order),
+      ...this.constructOrderMetaData(),
       total
     };
 
@@ -45,39 +51,29 @@ export class OrderService {
     return fromPromise(databaseOperation);
   }
 
-  public addAnonymousOrder(order: Order, total: number) {
+  addAnonymousOrder(order: Order, total: number): Observable<any> {
     const orderWithMetaData = {
       ...order,
-      ...this.constructOrderMetaData(order),
+      ...this.constructOrderMetaData(),
       total
     };
+    // console.log(orderWithMetaData);
+    // console.log(this.productsUrl.baseOnlineShopUrl);
+    return this.http.post<any>(this.productsUrl.baseOnlineShopUrl, orderWithMetaData);
 
-    const databaseOperation = this.store
-      .list('orders')
-      .push(orderWithMetaData)
-      .then((response) => response, (error) => error);
-
-    return fromPromise(databaseOperation);
+    // const databaseOperation = this.store
+    //   .list('orders')
+    //   .push(orderWithMetaData)
+    //   .then((response) => response, (error) => error);
+    //
+    // return fromPromise(databaseOperation);
   }
 
-  private constructOrderMetaData(order: Order) {
+  constructOrderMetaData() {
     return {
       number: (Math.random() * 10000000000).toString().split('.')[0],
       date: new Date().toString(),
       status: 'In Progress'
-    };
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.messageService.addError(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
     };
   }
 }

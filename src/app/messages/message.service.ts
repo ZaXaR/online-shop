@@ -14,7 +14,7 @@ export class MessageService {
 
   public add(message: string): void {
     this.messages.push(message);
-    this.toastr.success(message, 'Message:', this.toastrConfig);
+    // this.toastr.success(message, 'Message:', this.toastrConfig);
   }
 
   public addError(message: string): void {

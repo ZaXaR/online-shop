@@ -63,6 +63,7 @@
   color: $color;
   &:hover {
     background-color: $color;
+    border-color: #fff;
     color: $white-color;
   }
 }

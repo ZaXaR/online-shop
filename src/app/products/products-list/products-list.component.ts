@@ -13,6 +13,10 @@ import {Product} from '../../models/product.model';
 import {User} from '../../models/user.model';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {StorageService} from '../../services/storage/storage.service';
+import {IFilter} from '../../core/interfaces/interfaces';
+import {FiltersService} from '../shared/filters.service';
+import {OffcanvasService} from '../../core/shared/offcanvas.service';
+import {SeoService} from '../../services/seo/seo.service';
 
 @Component({
   selector: 'app-products',
@@ -28,6 +32,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   productsLoading: boolean;
   currentPagingPage: number;
   title: string;
+  paramsObject: Object;
+  filters: IFilter;
 
   constructor(
     private productService: ProductService,
@@ -38,7 +44,10 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     public uiService: UiService,
     private storageService: StorageService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public filtersService: FiltersService,
+    private offcanvasService: OffcanvasService,
+    private seoService: SeoService
   ) {
     this.router.events
       .pipe(
@@ -62,21 +71,40 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       .subscribe((page) => {
         this.currentPagingPage = page;
       });
-    this.getProducts();
   }
 
   getProducts() {
     this.productsLoading = true;
     const categories = this.route.snapshot.paramMap.get('categories');
+    this.paramsObject = this.route.snapshot.queryParams;
+    let paramsString = null;
+    if (this.paramsObject) {
+      paramsString = '?';
+      Object.keys(this.paramsObject).forEach((key) => {
+        if (this.paramsObject[key].length > 1 && Array.isArray(this.paramsObject[key])) {
+          this.paramsObject[key].forEach(child => {
+            paramsString = paramsString + key + '=' + child + '&';
+          });
+        } else {
+          paramsString = paramsString + key + '=' + this.paramsObject[key] + '&';
+        }
+      });
+    }
     combineLatest([
       this.productService
-        .getProducts(categories),
+        .getProducts(categories, paramsString),
       this.storageService.categoriesStorage$
     ]).subscribe(([products, category]) => {
-      this.products = <Product[]>products;
-      const data = category.filter(({name}) => name === categories);
-      this.title = data[0].abbreviation_ua;
-      this.setPage(this.currentPagingPage);
+      if (Array.isArray(products) && !products.length) {
+        this.products = null;
+      } else {
+        this.products = <Product[]>products;
+        this.setPage(this.currentPagingPage);
+      }
+      category = category.filter(({name}) => name === categories)[0];
+      this.filtersService.getFilterByCategory(category);
+      this.title = category.abbreviation_ua;
+      this.seoService.setMetaTitle('Mine | ' + category.abbreviation_ua);
       this.productsLoading = false;
     });
   }
@@ -111,5 +139,10 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // this.unsubscribe$.next(true);
     this.unsubscribe$.complete();
+  }
+
+  onFilterToggle(e: Event) {
+    this.offcanvasService.openOffcanvasNavigationFilter();
+    e.preventDefault();
   }
 }

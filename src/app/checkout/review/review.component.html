@@ -1,11 +1,11 @@
-<h4>Review Your Order</h4>
+<h4>Перегляньте своє замовлення</h4>
 <hr class="padding-bottom-1x">
 <div class="table-responsive shopping-cart">
   <table class="table">
     <thead>
       <tr>
-        <th>Product Name</th>
-        <th class="text-center">Subtotal</th>
+        <th>Назва продукту</th>
+        <th class="text-center">Всього</th>
         <th></th>
       </tr>
     </thead>
@@ -13,12 +13,12 @@
       <tr *ngFor="let item of items; let i = index">
         <td>
           <div class="product-item">
-            <a class="product-thumb" routerLink="/products/{{item.product.id}}">
-              <img [src]="item.product.imageURLs[0]" alt="{{item.product.name}}">
+            <a class="product-thumb" routerLink="/products/item/{{item.product._id}}">
+              <img src="https://tab.mine.in.ua/uploads/{{item.product.imageURLs[0]}}" alt="{{item.product.nameOfProduct}}">
             </a>
             <div class="product-info">
               <h4 class="product-title">
-                <a routerLink="/products/{{item.product.id}}">{{item.product.name}}
+                <a routerLink="/products/{{item.product._id}}">{{item.product.nameOfProduct}}
                   <small>x {{item.amount}}</small>
                 </a>
               </h4>
@@ -27,7 +27,7 @@
         </td>
         <td class="text-center text-lg text-medium">{{ (item.product.price * item.amount) | currency:"UAH":"symbol" }}</td>
         <td class="text-center">
-          <a class="btn btn-outline-primary btn-sm" routerLink="/cart">Edit</a>
+          <a class="btn btn-outline-primary btn-sm" routerLink="/cart">Редагувати</a>
         </td>
       </tr>
     </tbody>
@@ -35,24 +35,24 @@
 </div>
 <div class="shopping-cart-footer">
   <div class="column"></div>
-  <div class="column text-lg">Subtotal:
+  <div class="column text-lg">До сплати:
     <span class="text-medium">{{ total | currency:"UAH":"symbol" }}</span>
   </div>
 </div>
 <div class="row padding-top-1x mt-3">
   <div class="col-sm-6">
-    <h5>Shipping to:</h5>
+    <h5>Контактні данні:</h5>
     <ul class="list-unstyled">
       <li>
-        <span class="text-muted">Client:</span>{{customer.firstname}} {{customer.lastname}}</li>
+        <span class="text-muted">ФИО:</span>{{customer.firstname}} {{customer.lastname}}</li>
       <li>
-        <span class="text-muted">Address:</span>{{customer.address1}} {{customer.address2}}</li>
+        <span class="text-muted">Адреса:</span>{{customer.address1}} {{customer.address2}}</li>
       <li>
-        <span class="text-muted">Phone:</span>{{customer.phone}}</li>
+        <span class="text-muted">Номер телефону:</span>{{customer.phone}}</li>
     </ul>
   </div>
   <div class="col-sm-6">
-    <h5>Payment method:</h5>
+    <h5>Метод оплати:</h5>
     <ul class="list-unstyled">
       <li>
         <span class="text-muted">{{ paymentMethod }}</span></li>

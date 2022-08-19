@@ -4,7 +4,19 @@
 
 
 // Import Bootstrap Modules
-//@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap";
+
+.placeholder {
+  vertical-align: unset!important;
+  cursor: unset!important;
+  background-color: unset!important;
+  opacity: unset!important;
+}
+
+html {
+  overflow-x: hidden;
+}
+
 //@import "~bootstrap/scss/functions";
 //@import "~bootstrap/scss/variables";
 //@import "~bootstrap/scss/mixins";
@@ -34,7 +46,6 @@
 //@import "~bootstrap/scss/popover";
 //@import "~bootstrap/scss/carousel";
 //@import "~bootstrap/scss/utilities";
-
 
 // Helpers: Variables, Mixins and Placeholders
 @import 'helpers/variables';

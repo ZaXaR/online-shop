@@ -13,11 +13,15 @@ import {catchError, Observable, of} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 import {fromPromise} from 'rxjs-compat/observable/fromPromise';
 
-import {HttpClient, HttpResponse, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Order} from '../../models/order.model';
 
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
+// const httpOptions = {
+//   headers: new HttpHeaders({
+//     'Content-Type':  'application/json'
+//     // Authorization: 'bezkoder-secret-key'
+//   })
+// };
 
 @Injectable()
 export class ProductService {
@@ -53,9 +57,19 @@ export class ProductService {
     };
   }
 
-  public getProducts(type?: string): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.productsUrl.baseProductsUrl}/pageStore/0/100/${type}`, {observe: 'response'})
+  public getProducts(type?: string, params?: any): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.productsUrl.baseProductsUrl}/pageStore/${type}${params}`, {observe: 'response'})
       .pipe(map((arr) => arr.body as Product[]), catchError(this.handleError<any>(`getProducts`)));
+  }
+
+  getFilters(): Observable<any> {
+    return this.http.get<any>(this.productsUrl.baseFiltersUrl)
+      .pipe(
+        map(filters => {
+          return filters;
+        }),
+        catchError(this.handleError<any>(`getFilters`))
+      );
   }
 
   public getProductsQuery(): Observable<Product[]> {
@@ -139,6 +153,22 @@ export class ProductService {
       .pipe(map((arr) => arr), catchError(this.handleError<any>(`getCategories`)));
   }
 
+  public getAdditInform(id: any): Observable<any> {
+    const url = `${this.productsUrl.baseProductsUrl}/additional-information/${id}`;
+    return this.http.get<Product>(url)
+      .pipe(
+        tap((result) => {
+          if (result) {
+            return of(result);
+          } else {
+            this.messageService.addError(`Found no Desc with id=${id}`);
+            return of(null);
+          }
+        }),
+        catchError(this.handleError<Product>(`getProduct id=${id}`))
+      );
+  }
+
   public getProduct(id: any): Observable<Product | null> {
     const url = `${this.productsUrl.baseProductsUrl}/${id}`;
     return this.http.get<Product>(url)
@@ -171,7 +201,7 @@ export class ProductService {
   //   );
 
   public updateProduct(data: { product: Product; files: FileList }) {
-    const url = `${this.productsUrl.productsUrl}/${data.product._id}`;
+    const url = `${this.productsUrl.baseProductsUrl}/${data.product._id}`;
 
     if (!data.files.length) {
       return this.updateProductWithoutNewImage(data.product, url);
@@ -185,12 +215,12 @@ export class ProductService {
 
         return data;
       })
-      .then((dataWithImagePath) => {
+      .then(() => {
         return this.angularFireDatabase
           .object<Product>(url)
           .update(data.product);
       })
-      .then((response) => {
+      .then(() => {
         this.log(`Updated Product ${data.product.name}`);
         return data.product;
       })
@@ -205,7 +235,7 @@ export class ProductService {
     const dbOperation = this.angularFireDatabase
       .object<Product>(url)
       .update(product)
-      .then((response) => {
+      .then(() => {
         this.log(`Updated Product ${product.name}`);
         return product;
       })
@@ -227,7 +257,7 @@ export class ProductService {
           .list('products')
           .set(data.product._id.toString(), data.product);
       }, (error) => error)
-      .then((response) => {
+      .then(() => {
         this.log(`Added Product ${data.product.name}`);
         return data.product;
       })
@@ -242,7 +272,7 @@ export class ProductService {
   }
 
   public deleteProduct(product: Product) {
-    const url = `${this.productsUrl.productsUrl}/${product._id}`;
+    const url = `${this.productsUrl.baseProductsUrl}/${product._id}`;
 
     this.uploadService.deleteFile(product.imageRefs);
 
@@ -250,9 +280,43 @@ export class ProductService {
       .object<Product>(url)
       .remove()
       .then(() => this.log('success deleting' + product.name))
-      .catch((error) => {
+      .catch(() => {
         this.messageService.addError('Delete failed ' + product.name);
         this.handleError('delete product');
       });
+  }
+
+  // Order
+  addAnonymousOrder(order: Order, total: number): Observable<any> {
+    const orderWithMetaData = {
+      ...order,
+      ...this.constructOrderMetaData(),
+      total
+    };
+    // console.log(orderWithMetaData);
+    // console.log(this.productsUrl.baseOnlineShopUrl);
+    return this.http.post<any>(this.productsUrl.baseOnlineShopUrl, orderWithMetaData, {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    })
+      .pipe(
+        catchError(this.handleError('addHero'))
+      );
+
+    // const databaseOperation = this.store
+    //   .list('orders')
+    //   .push(orderWithMetaData)
+    //   .then((response) => response, (error) => error);
+    //
+    // return fromPromise(databaseOperation);
+  }
+
+  constructOrderMetaData() {
+    return {
+      number: (Math.random() * 10000000000).toString().split('.')[0],
+      date: new Date().toString(),
+      status: 'In Progress'
+    };
   }
 }

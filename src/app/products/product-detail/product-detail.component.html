@@ -13,7 +13,7 @@
           <div class="product-gallery">
             <!--            <span *ngIf="product.reduction" class="product-badge text-danger">{{product.reduction}}% Off</span>-->
             <div class="product-gallery-image" [ngClass]="{'loading': !imagesLoaded.includes(activeImageUrl)}">
-<!--              <img [hidden]="!imagesLoaded.includes(activeImageUrl)" class="img-fluid"-->
+              <!--              <img [hidden]="!imagesLoaded.includes(activeImageUrl)" class="img-fluid"-->
               <img class="img-fluid"
                    src="https://tab.mine.in.ua/uploads/{{activeImageUrl}}" alt="{{product.nameOfProduct}}"
                    (load)="onImageLoad($event)">
@@ -22,7 +22,7 @@
               <li *ngFor="let image of product.imageURLs; let i = index" [ngClass]="{'active': i === activeImageIndex}">
                 <a href="" (click)="onSelectThumbnail($event, i)" class="product-thumbnail-image"
                    [ngClass]="{'loading': !imagesLoaded.includes(activeImageUrl)}">
-<!--                  <img [hidden]="!imagesLoaded.includes(image)" [src]="'http://mine.in.ua/uploads/'+image"-->
+                  <!--                  <img [hidden]="!imagesLoaded.includes(image)" [src]="'http://mine.in.ua/uploads/'+image"-->
                   <img [src]="'https://tab.mine.in.ua/uploads/'+image"
                        alt="{{product.nameOfProduct}}" (load)="onImageLoad($event)">
                 </a>
@@ -39,33 +39,11 @@
           <span class="h2 d-block">
             <app-price [product]="product"></app-price>
           </span>
-          <p>{{product.description}}</p>
+          <!--          Buy button-->
+          <div class="pt-1 mb-2">
+            <span class="text-medium">UPC:</span> {{ product.barcode }}
+          </div>
           <div class="row margin-top-1x">
-            <!-- <div class="col-sm-4">
-              <div class="form-group">
-                <label for="size">Men's size</label>
-                <select class="form-control" id="size">
-                  <option>Chooze size</option>
-                  <option>11.5</option>
-                  <option>11</option>
-                  <option>10.5</option>
-                  <option>10</option>
-                  <option>9.5</option>
-                  <option>9</option>
-                  <option>8.5</option>
-                </select>
-              </div>
-            </div> -->
-            <!-- <div class="col-sm-5">
-              <div class="form-group">
-                <label for="color">Choose color</label>
-                <select class="form-control" id="color">
-                  <option>White/Red/Blue</option>
-                  <option>Black/Orange/Green</option>
-                  <option>Gray/Purple/White</option>
-                </select>
-              </div>
-            </div> -->
             <div class="col-sm-3">
               <div class="form-group">
                 <label for="quantity">Кількість</label>
@@ -79,52 +57,92 @@
               </div>
             </div>
           </div>
-          <div class="pt-1 mb-2">
-            <span class="text-medium">SKU:</span> {{ product._id }}
-          </div>
-<!--          <div class="padding-bottom-1x mb-2">-->
-<!--            <span *ngIf="product.categories" class="text-medium">Categories:&nbsp;</span>-->
-<!--            <a *ngFor="let category of product.categories" class="navi-link" href="#">{{ category }}{{' '}}</a>-->
-<!--          </div>-->
+          <!--                    <div class="padding-bottom-1x mb-2">-->
+          <!--                      <span *ngIf="product.categories" class="text-medium">Categories:&nbsp;</span>-->
+          <!--                      <a *ngFor="let category of product.categories" class="navi-link" href="#">{{ category }}{{' '}}</a>-->
+          <!--                    </div>-->
           <div class="form-group" *ngIf="user">
-<!--            <label for="review_rating">Your Rating</label>-->
+            <!--            <label for="review_rating">Your Rating</label>-->
             <select class="form-control form-control-rounded" name="rating" [(ngModel)]="selectedRating"
                     (change)="onRate()">
               <option *ngFor="let value of ratingValues" [value]="value">{{ value }} Stars</option>
             </select>
           </div>
-          <hr class="mb-3">
           <div class="d-flex flex-wrap justify-content-between">
-            <div class="entry-share mt-2 mb-2">
-              <span class="text-muted">Share:</span>
-              <div class="share-links">
-                <a class="social-button shape-circle sb-facebook" href="#" data-toggle="tooltip" data-placement="top"
-                   title="Facebook">
-                  <i class="socicon-facebook"></i>
-                </a>
-                <a class="social-button shape-circle sb-twitter" href="#" data-toggle="tooltip" data-placement="top"
-                   title="Twitter">
-                  <i class="socicon-twitter"></i>
-                </a>
-                <a class="social-button shape-circle sb-instagram" href="#" data-toggle="tooltip" data-placement="top"
-                   title="Instagram">
-                  <i class="socicon-instagram"></i>
-                </a>
-                <a class="social-button shape-circle sb-google-plus" href="#" data-toggle="tooltip" data-placement="top"
-                   title="Google +">
-                  <i class="socicon-googleplus"></i>
-                </a>
-              </div>
-            </div>
+            <!--                      <div class="entry-share mt-2 mb-2">-->
+            <!--                        <span class="text-muted">Share:</span>-->
+            <!--                        <div class="share-links">-->
+            <!--                          <a class="social-button shape-circle sb-facebook" href="#" data-toggle="tooltip" data-placement="top"-->
+            <!--                             title="Facebook">-->
+            <!--                            <i class="socicon-facebook"></i>-->
+            <!--                          </a>-->
+            <!--                          <a class="social-button shape-circle sb-twitter" href="#" data-toggle="tooltip" data-placement="top"-->
+            <!--                             title="Twitter">-->
+            <!--                            <i class="socicon-twitter"></i>-->
+            <!--                          </a>-->
+            <!--                          <a class="social-button shape-circle sb-instagram" href="#" data-toggle="tooltip" data-placement="top"-->
+            <!--                             title="Instagram">-->
+            <!--                            <i class="socicon-instagram"></i>-->
+            <!--                          </a>-->
+            <!--                          <a class="social-button shape-circle sb-google-plus" href="#" data-toggle="tooltip" data-placement="top"-->
+            <!--                             title="Google +">-->
+            <!--                            <i class="socicon-googleplus"></i>-->
+            <!--                          </a>-->
+            <!--                        </div>-->
+            <!--                      </div>-->
             <div class="sp-buttons mt-2 mb-2">
-              <!-- <button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist">
-                <i class="icon-heart"></i>
-              </button> -->
+              <!--                        <button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist">-->
+              <!--                          <i class="icon-heart"></i>-->
+              <!--                        </button>-->
               <button class="btn btn-primary" (click)="onAddToCart()">
-                <i class="icon-bag"></i> Додати до кошика
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Додати до кошика
               </button>
             </div>
           </div>
+          <hr class="mb-3">
+          <!--          Characteristic Products-->
+          <div class="product-features" *ngIf="product.filter">
+            <h3 class="widget-title">Характеристики</h3>
+            <div class="product-feature" *ngIf="product.filter.type_coffee">
+              <dt><span>Тип кави</span></dt>
+              <dd><span>{{ product.filter.type_coffee }}</span></dd>
+            </div>
+            <div class="product-feature" *ngIf="product.filter.coffee_variety">
+              <dt><span>Сорт кави</span></dt>
+              <dd><span>{{ product.filter.coffee_variety }}</span></dd>
+            </div>
+            <div class="product-feature" *ngIf="product.filter.roast_degree">
+              <dt><span>Ступінь обсмажування</span></dt>
+              <dd><span>{{ product.filter.roast_degree }}</span></dd>
+            </div>
+
+            <div class="product-feature" *ngIf="product.filter.type_tea">
+              <dt><span>Тип</span></dt>
+              <dd><span>{{ product.filter.type_tea }}</span></dd>
+            </div>
+            <div class="product-feature" *ngIf="product.filter.type_leaf">
+              <dt><span>Тип листа</span></dt>
+              <dd><span>{{ product.filter.type_leaf }}</span></dd>
+            </div>
+            <div class="product-feature" *ngIf="product.filter.type_taste">
+              <dt><span>Аромат</span></dt>
+              <dd><span>{{ product.filter.type_taste }}</span></dd>
+            </div>
+            <div class="product-feature" *ngIf="product.filter.packaging">
+              <dt><span>Фасування</span></dt>
+              <dd><span>{{ product.filter.packaging }}</span></dd>
+            </div>
+            <div class="product-feature" *ngIf="product.state.name">
+              <dt><span>Країна походження</span></dt>
+              <dd><span>{{ product.state.name }}</span></dd>
+            </div>
+          </div>
+
+          <ng-template [ngIf]="product.fullDesc">
+            <h3 class="widget-title">Опис</h3>
+            <p [innerHTML]="product.fullDesc"></p>
+          </ng-template>
+
 
         </div>
       </div>

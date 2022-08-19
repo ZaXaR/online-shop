@@ -1,12 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
 
-import { AuthService } from '../../account/shared/auth.service';
-import { OffcanvasService } from '../shared/offcanvas.service';
+import {AuthService} from '../../account/shared/auth.service';
+import {OffcanvasService} from '../shared/offcanvas.service';
 
-import { User } from '../../models/user.model';
+import {User} from '../../models/user.model';
+import {StorageService} from '../../services/storage/storage.service';
 
 @Component({
   selector: 'app-navigation-off-canvas',
@@ -16,16 +17,26 @@ import { User } from '../../models/user.model';
 export class NavigationOffCanvasComponent implements OnInit, OnDestroy {
   private authSubscription: Subscription;
   public user: User;
+  public categories: any;
 
   constructor(
     public offcanvasService: OffcanvasService,
     public authService: AuthService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private storageService: StorageService
+  ) {
+  }
 
   ngOnInit() {
     this.authSubscription = this.authService.user.subscribe((user) => {
       this.user = user;
+    });
+    this.getCategories();
+  }
+
+  getCategories() {
+    this.storageService.categoriesStorage$.subscribe(categories => {
+      this.categories = categories;
     });
   }
 
