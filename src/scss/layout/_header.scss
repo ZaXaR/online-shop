@@ -310,7 +310,7 @@ header {
   }
 }
 
-@media screen and (min-width: 1279px) {
+@media screen and (min-width: 1069px) {
   .site-branding {
     display: none;
   }
@@ -319,17 +319,16 @@ header {
 @media screen and (max-width: 1280px) {
   header.navbar.navbar-sticky {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
   }
   .logo-wrap {
     padding-left: 0;
-    padding-right: 20px;
   }
 }
 
 // Site Logo + Off-Canvas Toggle
 .site-branding {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   height: 100%;
@@ -611,7 +610,10 @@ header {
     }
 
     @media (max-width: $screen-xl) {
-      padding: 0 14px;
+      padding: 0;
+      > a i {
+        font-size: 22px;
+      }
       & > .subtotal {
         display: none;
       }
@@ -818,6 +820,7 @@ header {
   .site-menu,
   .offcanvas-toggle.cats-toggle,
   .toolbar .account,
+  app-navigation-main,
   .toolbar-dropdown {
     display: none !important;
   }
