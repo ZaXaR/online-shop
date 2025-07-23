@@ -1,11 +1,3 @@
-# CAS FEE PROJEKT 2 : SPA Shop Front End Implementation
-
-- Christian Zellweger (https://github.com/chzellweger)
-- André Abt (https://github.com/monobasic)
-
-Check out this project online at [http://shop.andre-abt.com](http://shop.andre-abt.com)
-Note: The pixelated product images are there because of image licensing reasons.
-
 ## Installation
 
 ### Clone repository
@@ -34,10 +26,6 @@ ng serve
 ```
 
 Runs a webpack-development server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-### Checkout the shop
-
-Point your browser to localhost:4200. In any case the dev build is not working, there is an already built app available on http://shop.andre-abt.com for checking out. Deeplinking for the Angular router is handled via .htaccess config.
 
 ### Run unit tests
 
@@ -148,26 +136,10 @@ So we decided to implement basic shop functionality for now and base the project
 - Order / Confirmation Email for Shop/User/Guest
 - Orders can be viewed by logged in user
 
-### Security
-
-- FireBase Security Rules for Shop User / Admin
-
 #### General
 
 - All displayed prices are handled via a PriceComponent to simplify currency display/formatting
 - Search with Typeahead functionality (Unfortunately, FireBase has very limited  functionality for full text search. For a real application, local search would be the better option)
-
-### Custom Express/MongoDB Backend
-
-Implementation started with a custom MEAN-architecture, which used a mLab-database.
-We switched to «serverless» with Firebase due to several reasons:
-
-- Backend not in the scope of this front-end-project and the CAS-FEE-task.
-- Firebase provides complete functionality set
-- Failure of knowledge-transfer between developers
-- mLab blocked in the HSR-network
-
-The unfinished project can be found under: [CAS-FEE-PROJEKT-2-CUSTOM-MEAN-BACKEND](https://github.com/chzellweger/CAS-FEE-PROJEKT-2-CUSTOM-MEAN-BACKEND)
 
 ### Special Mentions
 
@@ -231,10 +203,4 @@ Firebase provides a whole lot of functionalities which make things like user-man
 ### Testing
 
 Karma tests run quite slow, this could be a issue if you have a lot of tests when the app is growing. Jest, the testing framework of Facebook/React would be a good alternative. We did some research and it was quite easy to integrate into an Angular application. Also worth mentioning: we found our way around, but if you need to mock AngularFire and/or Firebase API stuff, this could be major pain in the ass ;)
-
-## Extra extra
-
-If you want to see how this project came to life according to its git-repo, checkout this awesome and funny video made with [Gource](http://gource.io) ([how to here](https://github.com/acaudwell/Gource/wiki/Videos)):
-
-[<img width="906" alt="bildschirmfoto 2018-04-22 um 16 38 46" src="https://user-images.githubusercontent.com/16070364/39096101-ac275aec-464b-11e8-884d-c623920a43a6.png">](https://drive.google.com/file/d/1XE7w15OPPKVKA1PFKpfTc04G_kNFEABo/view?usp=sharing)
 
