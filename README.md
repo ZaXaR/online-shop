@@ -1,11 +1,3 @@
-# CAS FEE PROJEKT 2 : SPA Shop Front End Implementation
-
-- Christian Zellweger (https://github.com/chzellweger)
-- André Abt (https://github.com/monobasic)
-
-Check out this project online at [http://shop.andre-abt.com](http://shop.andre-abt.com)
-Note: The pixelated product images are there because of image licensing reasons.
-
 ## Installation
 
 ### Clone repository
@@ -78,11 +70,6 @@ So we decided to implement basic shop functionality for now and base the project
 
 ### Shop functionality
 
-#### Shop Front Page
-
-- Featured Products with link to corresponding product detail page
-- Features for «New Arrivals», «On Sale» and «Best Rated» Products
-
 #### Products
 
 - Products fetched from FireBase backend and cached for future requests
@@ -97,14 +84,6 @@ So we decided to implement basic shop functionality for now and base the project
 - Edit existing product
 - Delete existing product
 - Images handled with Firebase Storage
-
-#### Rating
-
-- Products can be rated by logged in users from 1 to 5
-- User can change his previous rating
-- Previous rating is reflected in the UI
-- Overall rating gets calculated and displayed instantly
-- Rating is updated in a reactive manner, even for cached products
 
 #### Cart
 
